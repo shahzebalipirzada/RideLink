@@ -1,3 +1,7 @@
 spring:
   application:
     name: ride-link
+  mongodb:
+    host: localhost
+    port: 27017
+    database: ride-link
