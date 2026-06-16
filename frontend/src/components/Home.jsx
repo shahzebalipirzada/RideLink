@@ -6,7 +6,7 @@ import { FiMessageSquare, FiBell, FiSearch, FiMapPin, FiCalendar, FiClock, FiArr
 import { FaUserFriends, FaTrain, FaShieldAlt } from "react-icons/fa";
 
 // IMPORTANT: Replace this with your actual Mapbox API Token
-mapboxgl.accessToken = '';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA';
 
 const Home = () => {
   const mapContainer = useRef(null);
@@ -40,8 +40,50 @@ const Home = () => {
     };
   }, []);
 
+const [source_text, setSource_text] = useState("");
+const [destination_text, setDestination_text] = useState("");
+const [date, setDate] = useState("");
+const [time, setTime] = useState("");
 
 
+
+
+const handleFindGroups = () => {
+// Here you would typically send the `data` object to your backend API using fetch or axios. For example:
+
+  //format I will send the data to backend when user clicks on find groups button
+  const data = {
+    "source_text" : source_text,
+    "destination_text" : destination_text,
+    "source_coordinates" : [68.8191347, 27.7267609], 
+    "destination_coordinates" : [68.8191347, 27.7267609], 
+    "date" : date,
+    "time" : time
+  }
+
+fetch(`https://localhost:8080/ride/${radius}`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => {
+  if (!response.ok) throw new Error(`Server error: ${response.status}`);
+  return response.json();
+})
+.then(result => {
+  console.log('Groups found:', result);
+  // You can also update your UI with the results here
+})
+.catch(error => {
+  console.error('Error finding groups:', error);
+})
+
+// alert(`Finding groups with the following criteria:\nSource: ${source_text}\nDestination: ${destination_text}\nDate: ${date}\nTime: ${time}\nRadius: ${radius} km`)
+
+
+}
   
 
   return (
@@ -85,7 +127,7 @@ const Home = () => {
                 <label>Source</label>
                 <div className="input-wrapper">
                   <FiSearch className="input-icon" color="#3b82f6" />
-                  <input type="text" placeholder="Starting point" />
+                  <input value = {source_text} onChange={(e) => setSource_text(e.target.value)} type="text" placeholder="Starting point" />
                 </div>
               </div>
 
@@ -93,7 +135,7 @@ const Home = () => {
                 <label>Destination</label>
                 <div className="input-wrapper">
                   <FiMapPin className="input-icon" color="#3b82f6" />
-                  <input type="text" placeholder="Where to?" />
+                  <input value = {destination_text} onChange={(e) => setDestination_text(e.target.value)} type="text" placeholder="Where to?" />
                 </div>
               </div>
 
@@ -101,7 +143,7 @@ const Home = () => {
                 <label>Date</label>
                 <div className="input-wrapper">
                   <FiCalendar className="input-icon" color="#64748b" />
-                  <input type="date" />
+                  <input value = {date} onChange={(e) => setDate(e.target.value)} type="date" />
                 </div>
               </div>
 
@@ -109,7 +151,7 @@ const Home = () => {
                 <label>Time</label>
                 <div className="input-wrapper">
                   <FiClock className="input-icon" color="#64748b" />
-                  <input type="time" />
+                  <input value = {time} onChange={(e) => setTime(e.target.value)} type="time" />
                 </div>
               </div>
             </div>
@@ -129,7 +171,7 @@ const Home = () => {
                   className="radius-slider"
                 />
               </div>
-              <button className="find-btn">
+              <button className="find-btn" onClick={handleFindGroups}>
                 Find Groups <FiArrowRight />
               </button>
             </div>
