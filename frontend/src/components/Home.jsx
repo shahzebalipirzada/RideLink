@@ -31,6 +31,7 @@ const Home = () => {
       map.current.resize();
     });
 
+  
     // 3. THE FIX: Properly destroy AND nullify the reference
     return () => {
       if (map.current) {
@@ -52,13 +53,15 @@ const handleFindGroups = () => {
 // Here you would typically send the `data` object to your backend API using fetch or axios. For example:
 
   //format I will send the data to backend when user clicks on find groups button
+
+  const date = new Date(date+"T"+time);
+
+  const epochMs = date.getTime();
+
   const data = {
-    "source_text" : source_text,
-    "destination_text" : destination_text,
     "source_coordinates" : [68.8191347, 27.7267609], 
     "destination_coordinates" : [68.8191347, 27.7267609], 
-    "date" : date,
-    "time" : time
+    "departureTime" : epochMs
   }
 
 fetch(`https://localhost:8080/ride/${radius}`, {
