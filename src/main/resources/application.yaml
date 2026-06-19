@@ -1,7 +1,21 @@
 spring:
+
   application:
     name: ride-link
+
   mongodb:
     host: localhost
     port: 27017
     database: ride-link
+
+
+osrm:
+  base-url: http://router.project-osrm.org
+  profile: driving
+  route:
+    service: route
+    options:
+      - option: geometries
+        value: polyline6  # polyline6, geojson
+      - option: alternatives
+        value: true       # true, false, 1,2, ...
