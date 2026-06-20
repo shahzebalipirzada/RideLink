@@ -16,6 +16,6 @@ osrm:
     service: route
     options:
       - option: geometries
-        value: polyline6  # polyline6, geojson
+        value: geojson  # polyline6, geojson
       - option: alternatives
         value: true       # true, false, 1,2, ...
