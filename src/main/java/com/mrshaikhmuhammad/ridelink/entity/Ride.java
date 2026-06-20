@@ -1,11 +1,12 @@
 package com.mrshaikhmuhammad.ridelink.entity;
 
+import com.mrshaikhmuhammad.ridelink.external.osrm.route.OsrmRouteClient;
 import lombok.*;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.*;
 
-import java.time.Instant;
 import java.util.List;
 
 
@@ -16,12 +17,11 @@ public class Ride {
     ObjectId rideId;
 
     @NonNull
-    GeoPoint source;
+    GeoPoint origin;
     @NonNull
     GeoPoint destination;
 
-    @NonNull
-    Instant departureTime;
+    Path path;
 
     @DBRef
     List<User> passengers;
