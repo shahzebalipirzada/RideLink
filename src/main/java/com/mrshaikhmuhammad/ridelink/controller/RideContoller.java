@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("ride")
 public class RideContoller {
@@ -27,17 +25,7 @@ public class RideContoller {
     }
 
     @GetMapping("/{radius}")
-    public ResponseEntity<?> searchRides(@RequestBody Ride ride){
-        try{
-            List<Ride> matchedRides = rideService.searchRide(ride);
-
-            if(matchedRides != null)
-                return new ResponseEntity<>(matchedRides, HttpStatus.OK);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> searchRides(){
+        return null;
     }
 }
