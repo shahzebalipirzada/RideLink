@@ -3,7 +3,7 @@ package com.mrshaikhmuhammad.ridelink.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 public record Path(
         String code,
-        Route routes
+        Route route
 ) {
     public record Route(
             double distance,
