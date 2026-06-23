@@ -16,11 +16,13 @@ public class Ride {
     ObjectId rideId;
 
     @NonNull
+    Role role;
+    @NonNull
     GeoPoint origin;
     @NonNull
     GeoPoint destination;
 
-    Instant arrivalTime;
+    Instant departureTime;
     Path path;
 
     @DBRef
