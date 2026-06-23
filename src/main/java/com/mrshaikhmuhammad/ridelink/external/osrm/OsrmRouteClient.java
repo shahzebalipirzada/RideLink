@@ -1,7 +1,6 @@
-package com.mrshaikhmuhammad.ridelink.external.osrm.route;
+package com.mrshaikhmuhammad.ridelink.external.osrm;
 
 import com.mrshaikhmuhammad.ridelink.entity.GeoPoint;
-import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmProperties;
 import com.mrshaikhmuhammad.ridelink.entity.Path;
 
 import lombok.*;
@@ -35,7 +34,7 @@ public class OsrmRouteClient {
             );
     }
 
-    public Path getTrip(List<GeoPoint> stops){
+    public Path getRoute(List<GeoPoint> stops){
         String url = buildUrl(stops);
         ResponseEntity<Path> response = restTemplate.exchange(url, HttpMethod.GET, null, Path.class);
         return response.getBody();
