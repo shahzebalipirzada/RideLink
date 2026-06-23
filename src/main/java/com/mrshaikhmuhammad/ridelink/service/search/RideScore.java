@@ -1,74 +1,72 @@
 package com.mrshaikhmuhammad.ridelink.service.search;
 
 import com.mrshaikhmuhammad.ridelink.entity.*;
-import com.mrshaikhmuhammad.ridelink.external.osrm.route.OsrmRouteClient;
+import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Component
 public class RideScore {
 
     @Autowired
-    OsrmRouteClient tripClient;
+    OsrmRouteClient routeClient;
 
     private static final double WEIGHT_TIME     = 0.40;
     private static final double WEIGHT_DETOUR   = 0.45;
     private static final double WEIGHT_COVERAGE = 0.15;
+    private static final double MAX_WAIT_TIME_MINUTES = 120;
 
-    private double finalScore(Ride driver, Ride passenger) {
-        if (driver.getPath() == null || passenger.getPath() == null)
+    public double score(Ride driver, Ride passenger) {
+        if (driver.getPath().route().get(0) == null || passenger.getPath().route().get(0) == null)
             return 0.0;
 
-        double score = (WEIGHT_DETOUR   * detourScore(driver, passenger))
-                     + (WEIGHT_COVERAGE * coverageScore(driver, passenger))
-                     + (WEIGHT_TIME     *  timeScore(driver, passenger));
+        double driverDistance = driver.getPath().route().get(0).distance();
+        double passengerDistance = passenger.getPath().route().get(0).distance();
+        Path.Route sharedRoute = routeClient.getRoute(
+            List.of(
+                    driver.getOrigin(),
+                    passenger.getOrigin(),
+                    passenger.getDestination(),
+                    driver.getDestination()
+            )
+        ).route().get(0);
+
+        Instant passengerDepartureTime = passenger.getDepartureTime();
+        Instant driverDepartureTime = driver.getDepartureTime().plusSeconds(
+                (long) sharedRoute.legs().get(0).duration()
+        );
+
+        double score = (WEIGHT_DETOUR   * detourScore(driverDistance, sharedRoute.distance()))
+                     + (WEIGHT_COVERAGE * coverageScore(driverDistance, passengerDistance))
+                     + (WEIGHT_TIME     *  timeScore(driverDepartureTime, passengerDepartureTime));
 
         return score;
     }
 
-    public double timeScore(Ride driver, Ride passenger) {
-        long diffMinutes = Math.abs(Duration.between(
-                driver.getArrivalTime(),
-                passenger.getArrivalTime()
-        ).toMinutes());
+    public double timeScore(Instant driverArrival, Instant passengerArrival) {
+        long driverWaits    = Math.max(0, Duration.between(driverArrival, passengerArrival).toMinutes());
+        long passengerWaits = Math.max(0, Duration.between(passengerArrival, driverArrival).toMinutes());
 
-        return Math.max(0.0, 1.0 - diffMinutes / 60.0);
+        double driverScore    = Math.max(0.0, 1.0 - driverWaits    / MAX_WAIT_TIME_MINUTES);
+        double passengerScore = Math.max(0.0, 1.0 - passengerWaits / MAX_WAIT_TIME_MINUTES);
+
+        return Math.sqrt(driverScore * passengerScore);
     }
 
-    private double coverageScore(Ride driver, Ride passenger) {
-        Path.Route dRoute = driver.getPath().routes();
-        Path.Route pRoute = passenger.getPath().routes();
+    private double coverageScore(double dDistance, double pDistance) {
+        if (dDistance == 0 || pDistance == 0) return 0.0;
 
-        if (dRoute.distance() == 0 || pRoute.distance() == 0) {
-            return 0.0;
-        }
+        double driverCoverage = Math.min(1.0, pDistance / dDistance);
+        double passengerCoverage = Math.min(1.0, dDistance / pDistance);
 
-        double driverCoverage = Math.min(1.0, pRoute.distance() / dRoute.distance());
-        double passengerCoverage = Math.min(1.0, dRoute.distance() / pRoute.distance());
-
-        return Math.min(driverCoverage, passengerCoverage);
+        return  Math.sqrt(driverCoverage * passengerCoverage);
     }
 
-    private double detourScore(Ride driver, Ride passenger){
-        GeoPoint dOrigin = driver.getOrigin();
-        GeoPoint dDestination = driver.getDestination();
-        GeoPoint pOrigin = passenger.getOrigin();
-        GeoPoint pDestination = passenger.getDestination();
-
-        Path sharedPath = tripClient.getTrip(
-            List.of(dOrigin, pOrigin, pDestination, dDestination)
-        );
-
-        double dDistance = driver.getPath().routes().distance();
-        double pDistance = passenger.getPath().routes().distance();
-        double sharedDistance = sharedPath.routes().distance();
-
-        double dScore = dDistance/sharedDistance;
-        double pScore = pDistance/sharedDistance;
-
-        return Math.min(dScore, pScore);
+    private double detourScore(double driverDistance, double sharedDistance){
+        return driverDistance/sharedDistance;
     }
 }
