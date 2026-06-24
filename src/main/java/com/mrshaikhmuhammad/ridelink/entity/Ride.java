@@ -40,7 +40,7 @@ public class Ride {
 //        );
 
     public void setPath(OsrmRouteClient osrmClient){
-        Path routes = osrmClient.getRoute(
+        path = osrmClient.getRoute(
                 List.of(origin, destination)
         );
     }
