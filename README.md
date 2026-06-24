@@ -152,4 +152,4 @@ This project is under active development and is intended for learning, prototypi
 
 Because millions of people travel every day…
 
-But very few travel together—even when they should.
+But very few travel together, even when they should.
