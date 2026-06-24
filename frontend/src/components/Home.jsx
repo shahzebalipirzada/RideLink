@@ -2,23 +2,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './Home.css';
-import { FiMessageSquare, FiBell, FiSearch, FiMapPin, FiCalendar, FiClock, FiArrowRight } from "react-icons/fi";
+import { FiMessageSquare, FiBell, FiSearch, FiMapPin, FiCalendar, FiClock, FiArrowRight, FiPlus } from "react-icons/fi";
 import { FaUserFriends, FaTrain, FaShieldAlt } from "react-icons/fa";
 import SearchBoxComponent from './SearchBoxComponent';
-
-// IMPORTANT: Replace this with your actual Mapbox API Token
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA';
+import { motion, AnimatePresence } from 'framer-motion';
+import RouteCard from './RouteCard';
+// Security update: Using the .env variable
+mapboxgl.accessToken = "pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA";
 
 const Home = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-
- useEffect(() => {
-    // 1. If the map already exists, do nothing
+  useEffect(() => {
     if (map.current) return; 
 
-    // 2. Initialize the map
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v12', 
@@ -27,89 +25,87 @@ const Home = () => {
       pitch: 45,
     });
 
-    // Optional: Force resize just in case
     map.current.on('load', () => {
       map.current.resize();
     });
-
   
-    // 3. THE FIX: Properly destroy AND nullify the reference
     return () => {
       if (map.current) {
         map.current.remove();
-        map.current = null; // This line prevents the invisible map bug
+        map.current = null; 
       }
     };
   }, []);
 
-//handled the search data and set the state for source and destination
-const [date, setDate] = useState('');
-const [time, setTime] = useState('');
-const [source_data, setSourceData] = useState(null);
-const [destination_data, setDestinationData] = useState(null);
-const [radius, setRadius] = useState(15);
-const [hasVehicle, setHasVehicle] = useState(false);
-
-const handleSourceSelect = (data) => {
-  console.log("Source selected:", data);
-  setSourceData(data);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [source_data, setSourceData] = useState(null);
+  const [destination_data, setDestinationData] = useState(null);
+  const [radius, setRadius] = useState(15);
+  const [hasVehicle, setHasVehicle] = useState(false);
   
-};
+  // NEW: State to trigger the Framer Motion layout shift
+  const [showResults, setShowResults] = useState(false);
 
-const handleDestinationSelect = (data) => {
-  console.log("Destination selected:", data);
-  setDestinationData(data);
-  
-};
+  const handleSourceSelect = (data) => {
+    console.log("Source selected:", data);
+    setSourceData(data);
+  };
 
-const handleFindGroups = () => {
- let data = {
-  source: source_data,
-  destination: destination_data,
-  date: date,
-  time: time,
-  radius: radius,
-  hasVehicle: hasVehicle
- }
- 
-alert("Searching for groups with the following criteria:\n" + JSON.stringify(data, null, 2)); 
+  const handleDestinationSelect = (data) => {
+    console.log("Destination selected:", data);
+    setDestinationData(data);
+  };
+
+  const handleFindGroups = () => {
+
+    let data = {
+      role: hasVehicle ? "DRIVER" : "PASSENGERs",
+      origin:{
+        type:"Point",
+        coordinates:[source_data?.longitude, source_data?.latitude]
+      },
+      destination: {
+        type:"Point",
+        coordinates:[destination_data?.longitude, destination_data?.latitude]
+      },
+      departureTime:new Date(`${date}T${time}`).toISOString(),
+    };
+   // console.log("Searching groups with data:", data);
+
+    // alert(JSON.stringify(data, null, 2)); // For debugging: Show the data being sent
+    
+    // Trigger the compact layout animation
+    //setShowResults(true);
 
 
-useEffect(() => {
-  fetch('API Request here', {    
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(result => {
-    console.log("Search results:", result);
-  })
-  .catch(error => {
-    console.error("Error searching groups:", error);
-  });
-
-}, [data]);
-}
+    fetch(`http://localhost:8080/${radius}`, {    
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log("Search results:", result);
+    })
+    .catch(error => {
+      console.error("Error searching groups:", error);
+    });
+  }
 
   return (
     <div className="home-wrapper">
-      {/* Mapbox Background Container */}
       <div ref={mapContainer} className="map-container" />
-      
-      {/* Optional overlay to soften the map and make UI pop */}
       <div className="map-overlay"></div>
 
-      {/* Main UI Overlay */}
       <div className="ui-container">
         
-        {/* Top Navbar */}
         <nav className="navbar glass-panel">
-          <div className="nav-brand">RideLink</div>
+          <div className="nav-brand" onClick={() => setShowResults(false)} style={{cursor: 'pointer'}}>RideLink</div>
           <div className="nav-links">
-            <a href="#explore" className="active">Explore</a>
+            <a href="#explore" className="active" onClick={() => setShowResults(false)}>Explore</a>
             <a href="#trips">Trips</a>
             <a href="#groups">Groups</a>
           </div>
@@ -122,115 +118,189 @@ useEffect(() => {
           </div>
         </nav>
 
-        {/* Center Search Card */}
         <main className="main-content">
-          <div className="search-card glass-panel">
-            <h1 className="hero-title">Find your next journey.</h1>
-            <p className="hero-subtitle">
-              Seamlessly discover routes, collaborative trips, and transit groups tailored to your rhythm.
-            </p>
-
-            <div className="inputs-grid">
-              <div className="input-group">
-                <label>Source</label>
-              
-                  
-                  <SearchBoxComponent  onLocationSelect={handleSourceSelect} />
+          {/* FRAMER MOTION: layout prop handles the smooth resize automatically */}
+          <motion.div 
+            layout 
+            className={`search-card glass-panel ${showResults ? 'is-compact' : ''}`}
+            transition={{ duration: 0.5, type: "spring", bounce: 0.15 }}
+          >
             
-              </div>
+            {/* FRAMER MOTION: Smoothly hides the headers when search is clicked */}
+            <AnimatePresence>
+              {!showResults && (
+                <motion.div 
+                  layout 
+                  initial={{ opacity: 1, height: 'auto' }} 
+                  exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h1 className="hero-title">Find your next journey.</h1>
+                  <p className="hero-subtitle">
+                    Seamlessly discover routes, collaborative trips, and transit groups tailored to your rhythm.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-              <div className="input-group">
+            {/* Layout prop smoothly animates children into a row */}
+            <motion.div layout className="inputs-grid">
+              <motion.div layout className="input-group">
+                <label>Source</label>
+                <SearchBoxComponent onLocationSelect={handleSourceSelect} />
+              </motion.div>
+
+              <motion.div layout className="input-group">
                 <label>Destination</label>
-              
-                  
-                  <SearchBoxComponent  onLocationSelect={handleDestinationSelect} />
-             
-              </div>
+                <SearchBoxComponent onLocationSelect={handleDestinationSelect} />
+              </motion.div>
 
-              <div className="input-group">
+              <motion.div layout className="input-group">
                 <label>Date</label>
                 <div className="input-wrapper">
                   <FiCalendar className="input-icon" color="#64748b" />
-                  <input value = {date} onChange={(e) => setDate(e.target.value)} type="date" />
+                  <input value={date} onChange={(e) => setDate(e.target.value)} type="date" />
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="input-group">
+              <motion.div layout className="input-group">
                 <label>Time</label>
                 <div className="input-wrapper">
                   <FiClock className="input-icon" color="#64748b" />
-                  <input value = {time} onChange={(e) => setTime(e.target.value)} type="time" />
+                  <input value={time} onChange={(e) => setTime(e.target.value)} type="time" />
                 </div>
-              </div>
-            </div>
+              </motion.div>
 
-            {/* search option for asking whether the user has his own vehicle or not */}
-            <div className="vehicle-option-container">
-              <label className="vehicle-checkbox-label">
-                <input 
-                  type="checkbox" 
-                  checked={hasVehicle}
-                  onChange={(e) => setHasVehicle(e.target.checked)}
-                />
-                <span className="checkbox-custom"></span>
-                I will be driving my own vehicle
-              </label>
-            </div>
+              {/* Smaller update button that appears when in compact mode */}
+              {showResults && (
+                 <motion.button 
+                   layout 
+                   initial={{ opacity: 0, scale: 0.8 }} 
+                   animate={{ opacity: 1, scale: 1 }} 
+                   className="find-btn compact-btn" 
+                   onClick={handleFindGroups}
+                 >
+                   <FiSearch /> Update
+                 </motion.button>
+              )}
+            </motion.div>
 
+            {/* FRAMER MOTION: Smoothly hides the extended options */}
+            <AnimatePresence>
+              {!showResults && (
+                <motion.div 
+                  layout 
+                  initial={{ opacity: 1, height: 'auto' }} 
+                  exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="vehicle-option-container">
+                    <label className="vehicle-checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        checked={hasVehicle}
+                        onChange={(e) => setHasVehicle(e.target.checked)}
+                      />
+                      <span className="checkbox-custom"></span>
+                      I will be driving my own vehicle
+                    </label>
+                  </div>
 
-            <div className="search-actions">
-              <div className="slider-group">
-                <div className="slider-header">
-                  <label>Travel Radius</label>
-                  <span className="radius-value">{radius} km</span>
+                  <div className="search-actions">
+                    <div className="slider-group">
+                      <div className="slider-header">
+                        <label>Travel Radius</label>
+                        <span className="radius-value">{radius} km</span>
+                      </div>
+                      <input 
+                        type="range" 
+                        min="1" 
+                        max="50" 
+                        value={radius} 
+                        onChange={(e) => setRadius(e.target.value)} 
+                        className="radius-slider"
+                      />
+                    </div>
+                    <button className="find-btn" onClick={handleFindGroups}>
+                      Find Groups <FiArrowRight />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* FRAMER MOTION: The results panel sliding up from the bottom */}
+          <AnimatePresence>
+            {showResults && (
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="display-panel glass-panel large-panel"
+              >
+                <div className="panel-header">
+                  <h2 className="panel-title">Available Travel Groups</h2>
+                  <button className="action-accent-btn"><FiPlus /> Create Travel Group</button>
                 </div>
-                <input 
-                  type="range" 
-                  min="1" 
-                  max="50" 
-                  value={radius} 
-                  onChange={(e) => setRadius(e.target.value)} 
-                  className="radius-slider"
-                />
-              </div>
-              <button className="find-btn" onClick={handleFindGroups}>
-                Find Groups <FiArrowRight />
-              </button>
-            </div>
-          </div>
+                <div className="panel-scroll-content">
+                  <RouteCard 
+                    source="Sukkur IBA Campus" 
+                    destination="City Center"
+                    dateTime="Tomorrow • 1:30 PM"
+                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
+                  />
+                  <RouteCard 
+                    source="Sukkur IBA Campus" 
+                    destination="City Center"
+                    dateTime="Tomorrow • 1:30 PM"
+                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
+                  />
+                  
+                  <RouteCard 
+                    source="Sukkur IBA Campus" 
+                    destination="City Center"
+                    dateTime="Tomorrow • 1:30 PM"
+                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
+                  />
+                  <RouteCard 
+                    source="Sukkur IBA Campus" 
+                    destination="City Center"
+                    dateTime="Tomorrow • 1:30 PM"
+                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
+                  />
+                  
+                  
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {/* Bottom Info Cards */}
-          <div className="info-cards-container">
-            <div className="info-card glass-panel">
-              <div className="info-icon-wrapper bg-green">
-                <FaUserFriends color="#10b981" size={20} />
-              </div>
-              <div className="info-text">
-                <span className="info-label">ACTIVE COMMUNITIES</span>
-                <span className="info-value">1,248 Groups</span>
-              </div>
-            </div>
+          {/* Hide info cards smoothly when searching */}
+          <AnimatePresence>
+            {!showResults && (
+              <motion.div 
+                initial={{ opacity: 1 }} 
+                exit={{ opacity: 0, height: 0, overflow: 'hidden' }} 
+                className="info-cards-container"
+              >
+                <div className="info-card glass-panel">
+                  <div className="info-icon-wrapper bg-green"><FaUserFriends color="#10b981" size={20} /></div>
+                  <div className="info-text"><span className="info-label">ACTIVE COMMUNITIES</span><span className="info-value">1,248 Groups</span></div>
+                </div>
+                <div className="info-card glass-panel">
+                  <div className="info-icon-wrapper bg-blue"><FaTrain color="#3b82f6" size={20} /></div>
+                  <div className="info-text"><span className="info-label">REAL-TIME ROUTES</span><span className="info-value">Live Updates</span></div>
+                </div>
+                <div className="info-card glass-panel">
+                  <div className="info-icon-wrapper bg-purple"><FaShieldAlt color="#6366f1" size={20} /></div>
+                  <div className="info-text"><span className="info-label">SAFETY RATING</span><span className="info-value">Premium Security</span></div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-            <div className="info-card glass-panel">
-              <div className="info-icon-wrapper bg-blue">
-                <FaTrain color="#3b82f6" size={20} />
-              </div>
-              <div className="info-text">
-                <span className="info-label">REAL-TIME ROUTES</span>
-                <span className="info-value">Live Updates</span>
-              </div>
-            </div>
-
-            <div className="info-card glass-panel">
-              <div className="info-icon-wrapper bg-purple">
-                <FaShieldAlt color="#6366f1" size={20} />
-              </div>
-              <div className="info-text">
-                <span className="info-label">SAFETY RATING</span>
-                <span className="info-value">Premium Security</span>
-              </div>
-            </div>
-          </div>
         </main>
       </div>
     </div>

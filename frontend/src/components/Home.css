@@ -338,3 +338,114 @@ body {
   accent-color: #2563eb; /* Matches the primary blue theme */
   border-radius: 4px;
 }
+
+/* --- COMPACT STATE STYLES FOR FRAMER MOTION --- */
+
+/* The slim bar look */
+.search-card.is-compact {
+  padding: 1rem 1.5rem;
+  max-width: 1000px; /* Allow it to be wider to fit the row */
+  margin-bottom: 0.5rem;
+}
+
+/* Force the inputs into a single flex row */
+.search-card.is-compact .inputs-grid {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0;
+}
+
+/* Hide labels in the slim bar to save vertical space */
+.search-card.is-compact .input-group label {
+  display: none; 
+}
+
+/* Ensure inputs stretch evenly */
+.search-card.is-compact .input-group {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* The smaller Update button that appears inside the grid */
+.compact-btn {
+  padding: 0.75rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* --- RESULTS PANEL CLASSES --- */
+.display-panel {
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+}
+
+.large-panel {
+  max-width: 850px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.panel-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.panel-scroll-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* List Items in Results */
+.list-card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.item-route-details h4 {
+  font-size: 1.05rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.item-route-details p {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.action-accent-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.join-btn {
+  background: white;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
