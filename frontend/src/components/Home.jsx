@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './Home.css';
 import { FiMessageSquare, FiBell, FiSearch, FiMapPin, FiCalendar, FiClock, FiArrowRight } from "react-icons/fi";
 import { FaUserFriends, FaTrain, FaShieldAlt } from "react-icons/fa";
+import SearchBoxComponent from './SearchBoxComponent';
 
 // IMPORTANT: Replace this with your actual Mapbox API Token
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA';
@@ -11,7 +12,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzY
 const Home = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [radius, setRadius] = useState(15);
+
 
  useEffect(() => {
     // 1. If the map already exists, do nothing
@@ -41,53 +42,55 @@ const Home = () => {
     };
   }, []);
 
-const [source_text, setSource_text] = useState("");
-const [destination_text, setDestination_text] = useState("");
-const [date, setDate] = useState("");
-const [time, setTime] = useState("");
 
+const [date, setDate] = useState('');
+const [time, setTime] = useState('');
+const [source_data, setSourceData] = useState(null);
+const [destination_data, setDestinationData] = useState(null);
+const [radius, setRadius] = useState(15);
 
+const handleSourceSelect = (data) => {
+  console.log("Source selected:", data);
+  setSourceData(data);
+  
+};
 
+const handleDestinationSelect = (data) => {
+  console.log("Destination selected:", data);
+  setDestinationData(data);
+  
+};
 
 const handleFindGroups = () => {
-// Here you would typically send the `data` object to your backend API using fetch or axios. For example:
-
-  //format I will send the data to backend when user clicks on find groups button
-
-  const date = new Date(date+"T"+time);
-
-  const epochMs = date.getTime();
-
-  const data = {
-    "source_coordinates" : [68.8191347, 27.7267609], 
-    "destination_coordinates" : [68.8191347, 27.7267609], 
-    "departureTime" : epochMs
-  }
-
-fetch(`https://localhost:8080/ride/${radius}`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => {
-  if (!response.ok) throw new Error(`Server error: ${response.status}`);
-  return response.json();
-})
-.then(result => {
-  console.log('Groups found:', result);
-  // You can also update your UI with the results here
-})
-.catch(error => {
-  console.error('Error finding groups:', error);
-})
-
-// alert(`Finding groups with the following criteria:\nSource: ${source_text}\nDestination: ${destination_text}\nDate: ${date}\nTime: ${time}\nRadius: ${radius} km`)
+ let data = {
+  source: source_data,
+  destination: destination_data,
+  date: date,
+  time: time,
+  radius: radius
+ }
+ 
+alert("Searching for groups with the following criteria:\n" + JSON.stringify(data, null, 2)); 
 
 
+useEffect(() => {
+  fetch('API Request here', {    
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log("Search results:", result);
+  })
+  .catch(error => {
+    console.error("Error searching groups:", error);
+  });
+
+}, [data]);
 }
-  
 
   return (
     <div className="home-wrapper">
@@ -128,18 +131,18 @@ fetch(`https://localhost:8080/ride/${radius}`, {
             <div className="inputs-grid">
               <div className="input-group">
                 <label>Source</label>
-                <div className="input-wrapper">
-                  <FiSearch className="input-icon" color="#3b82f6" />
-                  <input value = {source_text} onChange={(e) => setSource_text(e.target.value)} type="text" placeholder="Starting point" />
-                </div>
+              
+                  
+                  <SearchBoxComponent  onLocationSelect={handleSourceSelect} />
+            
               </div>
 
               <div className="input-group">
                 <label>Destination</label>
-                <div className="input-wrapper">
-                  <FiMapPin className="input-icon" color="#3b82f6" />
-                  <input value = {destination_text} onChange={(e) => setDestination_text(e.target.value)} type="text" placeholder="Where to?" />
-                </div>
+              
+                  
+                  <SearchBoxComponent  onLocationSelect={handleDestinationSelect} />
+             
               </div>
 
               <div className="input-group">
