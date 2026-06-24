@@ -1,4 +1,4 @@
-package com.mrshaikhmuhammad.ridelink.service.search;
+package com.mrshaikhmuhammad.ridelink.service.scoring;
 
 import com.mrshaikhmuhammad.ridelink.entity.*;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
@@ -20,12 +20,23 @@ public class RideScore {
     private static final double WEIGHT_COVERAGE = 0.15;
     private static final double MAX_WAIT_TIME_MINUTES = 120;
 
-    public double score(Ride driver, Ride passenger) {
-        if (driver.getPath().route().get(0) == null || passenger.getPath().route().get(0) == null)
+    public double score(Ride requestingRide, Ride candidate) {
+
+        Ride driver, passenger;
+        if(requestingRide.getRole() == Role.PASSENGER){
+            driver = candidate;
+            passenger = requestingRide;
+        }
+        else{
+            driver = requestingRide;
+            passenger = candidate;
+        }
+
+        if (driver.getPath().routes().get(0) == null || passenger.getPath().routes().get(0) == null)
             return 0.0;
 
-        double driverDistance = driver.getPath().route().get(0).distance();
-        double passengerDistance = passenger.getPath().route().get(0).distance();
+        double driverDistance = driver.getPath().routes().get(0).distance();
+        double passengerDistance = passenger.getPath().routes().get(0).distance();
         Path.Route sharedRoute = routeClient.getRoute(
             List.of(
                     driver.getOrigin(),
@@ -33,7 +44,7 @@ public class RideScore {
                     passenger.getDestination(),
                     driver.getDestination()
             )
-        ).route().get(0);
+        ).routes().get(0);
 
         Instant passengerDepartureTime = passenger.getDepartureTime();
         Instant driverDepartureTime = driver.getDepartureTime().plusSeconds(
