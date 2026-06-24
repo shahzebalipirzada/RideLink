@@ -42,12 +42,13 @@ const Home = () => {
     };
   }, []);
 
-
+//handled the search data and set the state for source and destination
 const [date, setDate] = useState('');
 const [time, setTime] = useState('');
 const [source_data, setSourceData] = useState(null);
 const [destination_data, setDestinationData] = useState(null);
 const [radius, setRadius] = useState(15);
+const [hasVehicle, setHasVehicle] = useState(false);
 
 const handleSourceSelect = (data) => {
   console.log("Source selected:", data);
@@ -67,7 +68,8 @@ const handleFindGroups = () => {
   destination: destination_data,
   date: date,
   time: time,
-  radius: radius
+  radius: radius,
+  hasVehicle: hasVehicle
  }
  
 alert("Searching for groups with the following criteria:\n" + JSON.stringify(data, null, 2)); 
@@ -161,6 +163,20 @@ useEffect(() => {
                 </div>
               </div>
             </div>
+
+            {/* search option for asking whether the user has his own vehicle or not */}
+            <div className="vehicle-option-container">
+              <label className="vehicle-checkbox-label">
+                <input 
+                  type="checkbox" 
+                  checked={hasVehicle}
+                  onChange={(e) => setHasVehicle(e.target.checked)}
+                />
+                <span className="checkbox-custom"></span>
+                I will be driving my own vehicle
+              </label>
+            </div>
+
 
             <div className="search-actions">
               <div className="slider-group">

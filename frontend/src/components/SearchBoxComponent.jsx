@@ -1,6 +1,9 @@
 import { SearchBox } from '@mapbox/search-js-react';
 import {useEffect} from 'react';
 import './SearchBoxComponent.css';
+
+
+
 const SearchBoxComponent = (props) => {
 
   const handleRetrieve = (result) => {
@@ -14,7 +17,9 @@ const SearchBoxComponent = (props) => {
     props.onLocationSelect(data);
   };
   return (
-    <div className="ridelink-search-wrapper">
+    <>
+    
+    <div className="mapbox-input-container">
     <SearchBox
       accessToken='pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA'
       options={{
@@ -22,8 +27,22 @@ const SearchBoxComponent = (props) => {
         country: 'PK'
       }}
       onRetrieve = {handleRetrieve}
+
+      theme={{
+          variables: {
+            fontFamily: 'Inter, sans-serif',
+            unit: '1rem',
+            padding: '0',
+            boxShadow: 'none',
+            border: 'none',
+            borderRadius: '20px',
+            colorBackground: 'white',
+            colorText: '#334155',
+          }
+        }}
     />
     </div>
+    </>
   )
 }
 
