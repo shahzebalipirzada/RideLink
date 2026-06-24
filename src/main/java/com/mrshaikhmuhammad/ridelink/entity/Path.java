@@ -5,7 +5,7 @@ import java.util.*;
 
 public record Path(
         String code,
-        List<Route> route,
+        List<Route> routes,
         List<Waypoint> waypoints
 ) {
 
