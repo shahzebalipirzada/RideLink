@@ -17,5 +17,3 @@ osrm:
     options:
       - option: geometries
         value: polyline6  # polyline6, geojson
-      - option: alternatives
-        value: false
