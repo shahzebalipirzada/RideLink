@@ -1,4 +1,4 @@
-# 🚗 RideLink
+# RideLink
 
 > **Don’t travel alone when someone is already going your way.**
 
