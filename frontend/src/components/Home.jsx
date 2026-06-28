@@ -37,13 +37,18 @@ const Home = () => {
     };
   }, []);
 
+
+
+// My Logic for sending initial search data
+
+
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [source_data, setSourceData] = useState(null);
   const [destination_data, setDestinationData] = useState(null);
   const [radius, setRadius] = useState(15);
   const [hasVehicle, setHasVehicle] = useState(false);
-  
+  const [options, setOptions] = useState([]); // State to hold search results
   // NEW: State to trigger the Framer Motion layout shift
   const [showResults, setShowResults] = useState(false);
 
@@ -60,7 +65,7 @@ const Home = () => {
   const handleFindGroups = () => {
 
     let data = {
-      role: hasVehicle ? "DRIVER" : "PASSENGERs",
+      role: hasVehicle ? "DRIVER" : "PASSENGER",
       origin:{
         type:"Point",
         coordinates:[source_data?.longitude, source_data?.latitude]
@@ -73,13 +78,15 @@ const Home = () => {
     };
    // console.log("Searching groups with data:", data);
 
-    // alert(JSON.stringify(data, null, 2)); // For debugging: Show the data being sent
+    alert(JSON.stringify(data, null, 2)); // For debugging: Show the data being sent
     
     // Trigger the compact layout animation
-    //setShowResults(true);
+    setShowResults(true);
+
+ 
 
 
-    fetch(`http://localhost:8080/${radius}`, {    
+    fetch(`http://localhost:8080/search/ride/${radius}`, {    
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -88,6 +95,7 @@ const Home = () => {
     })
     .then(response => response.json())
     .then(result => {
+      // setOptions(result.data);
       console.log("Search results:", result);
     })
     .catch(error => {
@@ -118,7 +126,7 @@ const Home = () => {
           </div>
         </nav>
 
-        <main className="main-content">
+        <main className={`main-content ${showResults ? 'results-layout' : 'explore-layout'}`}>
           {/* FRAMER MOTION: layout prop handles the smooth resize automatically */}
           <motion.div 
             layout 
@@ -245,31 +253,25 @@ const Home = () => {
                   <button className="action-accent-btn"><FiPlus /> Create Travel Group</button>
                 </div>
                 <div className="panel-scroll-content">
-                  <RouteCard 
-                    source="Sukkur IBA Campus" 
-                    destination="City Center"
-                    dateTime="Tomorrow • 1:30 PM"
-                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
-                  />
-                  <RouteCard 
-                    source="Sukkur IBA Campus" 
-                    destination="City Center"
-                    dateTime="Tomorrow • 1:30 PM"
-                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
-                  />
-                  
-                  <RouteCard 
-                    source="Sukkur IBA Campus" 
-                    destination="City Center"
-                    dateTime="Tomorrow • 1:30 PM"
-                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
-                  />
-                  <RouteCard 
-                    source="Sukkur IBA Campus" 
-                    destination="City Center"
-                    dateTime="Tomorrow • 1:30 PM"
-                    onJoin={() => console.log("Joining Sukkur IBA Campus ➔ City Center group")}
-                  />
+                  {
+                    options.length == 0 ? (
+                      <div className="no-results">
+                        <p>No groups found. Try adjusting your search criteria.</p>
+                      </div>
+                    ) : (
+                    
+                    options.map((option, index) => (
+                      <RouteCard 
+                        key={index}
+                        source={option.source}
+                        destination={option.destination}
+                        dateTime={option.dateTime}
+                        onJoin={() => console.log(`Joining ${option.source} ➔ ${option.destination} group`)}
+                      />
+                    ))
+                  )
+                  }
+                    
                   
                   
                 </div>

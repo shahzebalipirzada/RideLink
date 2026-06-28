@@ -132,6 +132,16 @@ body {
   gap: 2rem;
 }
 
+.explore-layout {
+  justify-content: center;
+}
+
+/* 3. After Click (Pushed to Top) */
+.results-layout {
+  justify-content: flex-start; 
+  padding-top: 1.5rem; /* Gives it a little breathing room under the navbar */
+}
+
 /* Central Search Card */
 .search-card {
   border-radius: 24px;
@@ -343,10 +353,12 @@ body {
 
 /* The slim bar look */
 .search-card.is-compact {
+
   padding: 1rem 1.5rem;
-  max-width: 1000px; /* Allow it to be wider to fit the row */
-  margin-bottom: 0.5rem;
+  max-width: 1000px; 
+  margin-bottom: 0.5rem; /* Keep this small so the results panel sits snug beneath it */
 }
+
 
 /* Force the inputs into a single flex row */
 .search-card.is-compact .inputs-grid {
@@ -380,6 +392,7 @@ body {
   border-radius: 24px;
   padding: 2.5rem;
   width: 100%;
+  z-index:-1;
 }
 
 .large-panel {
