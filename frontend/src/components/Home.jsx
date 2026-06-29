@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { useMap } from '../hooks/useMap';
 import './Home.css';
 import { FiMessageSquare, FiBell, FiSearch, FiMapPin, FiCalendar, FiClock, FiArrowRight, FiPlus } from "react-icons/fi";
 import { FaUserFriends, FaTrain, FaShieldAlt } from "react-icons/fa";
@@ -10,35 +11,15 @@ import RouteCard from './RouteCard';
 import axios from 'axios'
 
 
-// Security update: Using the .env variable
+
 mapboxgl.accessToken = "pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA";
 
 const Home = () => {
+
+  //useMap hook to initialize the map
   const mapContainer = useRef(null);
-  const map = useRef(null);
+  useMap(mapContainer);
 
-  useEffect(() => {
-    if (map.current) return; 
-
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12', 
-      center: [68.8191347, 27.7267609],
-      zoom: 13,
-      pitch: 45,
-    });
-
-    map.current.on('load', () => {
-      map.current.resize();
-    });
-  
-    return () => {
-      if (map.current) {
-        map.current.remove();
-        map.current = null; 
-      }
-    };
-  }, []);
 
 
 
@@ -77,7 +58,7 @@ const Home = () => {
         type:"Point",
         coordinates:[destination_data?.longitude, destination_data?.latitude]
       },
-      departureTime:new Date(`${date}T${time}`).toISOString(),
+      "departure-time":new Date(`${date}T${time}`).toISOString(),
     };
    // console.log("Searching groups with data:", data);
 
@@ -88,16 +69,16 @@ const Home = () => {
 
 
 
-    fetch(`/search/ride/${radius}`, {    
+    fetch(`/ride/search/${radius}`, {    
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    //.then(response => response.json())
     .then(result => {
-      // setOptions(result.data);
+      // setOptions(result);
       console.log("Search results:", result);
     })
     .catch(error => {
@@ -227,7 +208,7 @@ const Home = () => {
                         min="1" 
                         max="50" 
                         value={radius} 
-                        onChange={(e) => setRadius(e.target.value)} 
+                        onChange={(e) => setRadius(Number(e.target.value))} 
                         className="radius-slider"
                       />
                     </div>
@@ -265,10 +246,10 @@ const Home = () => {
                     options.map((option, index) => (
                       <RouteCard 
                         key={index}
-                        source={option.source}
+                        source={option.origin}
                         destination={option.destination}
-                        dateTime={option.dateTime}
-                        onJoin={() => console.log(`Joining ${option.source} ➔ ${option.destination} group`)}
+                        dateTime={option.stringify("departure-time")}
+                        onJoin={() => console.log(`Joining ${option.origin} ➔ ${option.destination} group`)}
                       />
                     ))
                   )
