@@ -1,11 +1,10 @@
-package com.mrshaikhmuhammad.ridelink.entity;
+package com.mrshaikhmuhammad.ridelink.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.*;
 
 import java.util.List;
 

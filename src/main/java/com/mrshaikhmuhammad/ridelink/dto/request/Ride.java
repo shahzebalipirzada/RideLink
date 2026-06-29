@@ -1,8 +1,8 @@
-package com.mrshaikhmuhammad.ridelink.entity;
+package com.mrshaikhmuhammad.ridelink.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mrshaikhmuhammad.ridelink.dto.request.GeoPoint;
 import com.mrshaikhmuhammad.ridelink.dto.response.Path;
+import com.mrshaikhmuhammad.ridelink.entity.Role;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import lombok.*;
 import org.bson.types.ObjectId;
@@ -22,6 +22,7 @@ public class Ride {
     GeoPoint origin;
     GeoPoint destination;
     @JsonProperty("departure-time")
+    @Field("departure-time")
     Instant departureTime;
 
     Path path;

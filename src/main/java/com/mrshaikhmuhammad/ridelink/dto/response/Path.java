@@ -1,4 +1,4 @@
-package com.mrshaikhmuhammad.ridelink.entity;
+package com.mrshaikhmuhammad.ridelink.dto.response;
 
 import com.fasterxml.jackson.annotation.*;
 import java.util.*;
