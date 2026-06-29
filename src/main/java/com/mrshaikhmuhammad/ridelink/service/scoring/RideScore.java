@@ -1,5 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.service.scoring;
 
+import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
+import com.mrshaikhmuhammad.ridelink.dto.response.Path;
 import com.mrshaikhmuhammad.ridelink.entity.*;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import org.springframework.beans.factory.annotation.Autowired;

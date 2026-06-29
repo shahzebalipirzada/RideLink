@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.external.osrm;
 
-import com.mrshaikhmuhammad.ridelink.entity.GeoPoint;
-import com.mrshaikhmuhammad.ridelink.entity.Path;
+import com.mrshaikhmuhammad.ridelink.dto.request.GeoPoint;
+import com.mrshaikhmuhammad.ridelink.dto.response.Path;
 
 import lombok.*;
 import org.springframework.http.*;
