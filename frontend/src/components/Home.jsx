@@ -7,6 +7,9 @@ import { FaUserFriends, FaTrain, FaShieldAlt } from "react-icons/fa";
 import SearchBoxComponent from './SearchBoxComponent';
 import { motion, AnimatePresence } from 'framer-motion';
 import RouteCard from './RouteCard';
+import axios from 'axios'
+
+
 // Security update: Using the .env variable
 mapboxgl.accessToken = "pk.eyJ1Ijoic2hhaHplYmFsaSIsImEiOiJjbXE5Y2wzYWgwMXg1MnNzYzluMzh0eDgyIn0.x3OfkUHnSq_FuB9_R0RkLA";
 
@@ -39,7 +42,7 @@ const Home = () => {
 
 
 
-// My Logic for sending initial search data
+// My Logic for sending initial search datac
 
 
   const [date, setDate] = useState('');
@@ -83,10 +86,9 @@ const Home = () => {
     // Trigger the compact layout animation
     setShowResults(true);
 
- 
 
 
-    fetch(`http://localhost:8080/search/ride/${radius}`, {    
+    fetch(`/search/ride/${radius}`, {    
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
