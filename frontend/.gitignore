@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 
+ride-link-0.0.1-SNAPSHOT (2)
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
