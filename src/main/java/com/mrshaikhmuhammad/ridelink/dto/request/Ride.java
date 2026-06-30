@@ -21,8 +21,8 @@ public class Ride {
     Role role; //driver passenger
     GeoPoint origin;
     GeoPoint destination;
-    @JsonProperty("departure-time")
-    @Field("departure-time")
+
+    @Field("departure_time")
     Instant departureTime;
 
     Path path;
