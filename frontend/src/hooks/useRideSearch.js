@@ -31,7 +31,7 @@ export function useRideSearch() {
       type: "Point",
       coordinates: [destinationData?.longitude, destinationData?.latitude],
     },
-    "departureTime": new Date(`${date}T${time}`).toISOString(),
+    "departureTime": new Date(`${date}T${time}Z`).toISOString(),
   });
 
   const validate = () => {
@@ -55,6 +55,7 @@ export function useRideSearch() {
 
     try {
       const payload = buildPayload();
+      alert(JSON.stringify(payload, null, 2)); // Debugging: Show the payload
       const results = await searchRideGroups(payload, radius);
       setOptions(results);
     } catch (err) {
