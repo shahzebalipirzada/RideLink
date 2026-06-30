@@ -15,7 +15,7 @@ const Navbar = ({ onLogoClick }) => (
 
     <div className="nav-links">
       <a href="#explore" className="active" onClick={onLogoClick}>Explore</a>
-      <a href="#trips">Trips</a>
+      <a href="#messages">Messages</a>
       <a href="#groups">Groups</a>
     </div>
 
