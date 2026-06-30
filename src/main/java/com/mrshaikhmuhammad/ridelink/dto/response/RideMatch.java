@@ -2,6 +2,10 @@ package com.mrshaikhmuhammad.ridelink.dto.response;
 
 import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
 public record RideMatch(
         String origin,
         String destination,
@@ -9,9 +13,13 @@ public record RideMatch(
 ) {
     public RideMatch(Ride ride) {
         this(
-                ride.getOrigin().toString(),
-                ride.getDestination().toString(),
-                ride.getDepartureTime().toString()
+                ride.getOrigin().getName(),
+
+                ride.getDestination().getName(),
+
+                DateTimeFormatter.ofPattern("MMMM d 'at' h:mm a")
+                        .withZone(ZoneOffset.UTC)
+                        .format(ride.getDepartureTime())
         );
     }
 }
