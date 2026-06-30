@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.css';
+import '../styles/Login.css';
 import { FaLocationDot, FaShieldHalved, FaUserGroup, FaEye } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
