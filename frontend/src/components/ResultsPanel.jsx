@@ -2,6 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiPlus } from 'react-icons/fi';
 import RouteCard from './RouteCard';
+import {useState} from 'react';
+import AddGroupComponent from './AddGroupComponent';
+import { useCreateGroupModal } from '../hooks/useCreateGroupModal';
 
 /**
  * ResultsPanel
@@ -11,7 +14,16 @@ import RouteCard from './RouteCard';
  * @param {boolean} isLoading - Whether a search is in progress
  * @param {string|null} error - Error message to display, if any
  */
-const ResultsPanel = ({ options, isLoading, error }) => (
+
+
+const ResultsPanel = ({ options, isLoading, error, onGroupCreated}) => {
+  const { isOpen, openModal, closeModal, handleSubmit } = useCreateGroupModal({ onGroupCreated });
+
+  return (
+<>
+
+       <AddGroupComponent isOpen={isOpen} onClose={closeModal} onSubmit={handleSubmit} />
+
   <motion.div
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
@@ -21,7 +33,7 @@ const ResultsPanel = ({ options, isLoading, error }) => (
   >
     <div className="panel-header">
       <h2 className="panel-title">Available Travel Groups</h2>
-      <button className="action-accent-btn">
+      <button className="action-accent-btn" onClick={openModal}>
         <FiPlus /> Create Travel Group
       </button>
     </div>
@@ -56,6 +68,7 @@ const ResultsPanel = ({ options, isLoading, error }) => (
       ))}
     </div>
   </motion.div>
+  </>
 );
-
+}
 export default ResultsPanel;
