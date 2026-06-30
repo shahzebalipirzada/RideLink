@@ -61,7 +61,7 @@ const Home = () => {
 
           <AnimatePresence>
             {showResults && (
-              <ResultsPanel options={options} isLoading={isLoading} error={error} />
+              <ResultsPanel options={options} isLoading={isLoading} error={error} onGroupCreated={handleFindGroups} />
             )}
           </AnimatePresence>
 
