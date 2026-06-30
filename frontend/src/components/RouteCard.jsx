@@ -1,5 +1,5 @@
 import React from 'react';
-import './RouteCard.css';
+import '../styles/RouteCard.css';
 
 const RouteCard = ({ source, destination, dateTime, onJoin, buttonText = "Join Group" }) => {
   return (

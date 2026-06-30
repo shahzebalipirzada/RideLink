@@ -1,6 +1,6 @@
 import { SearchBox } from '@mapbox/search-js-react';
 import {useEffect} from 'react';
-import './SearchBoxComponent.css';
+import '../styles/SearchBoxComponent.css';
 
 
 

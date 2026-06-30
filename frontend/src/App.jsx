@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import "./App.css";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import SearchBoxComponent from "./components/SearchBoxComponent";
 //import Maps from "./components/Maps";
 function App() {
