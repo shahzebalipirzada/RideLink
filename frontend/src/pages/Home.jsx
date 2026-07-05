@@ -45,7 +45,7 @@ const Home = () => {
       <div className="map-overlay" />
 
       <div className="ui-container">
-        <Navbar onLogoClick={resetSearch} />
+        <Navbar onLogoClick={resetSearch} activeLink="home" />
 
         <main className={`main-content ${showResults ? 'results-layout' : 'explore-layout'}`}>
           <SearchForm

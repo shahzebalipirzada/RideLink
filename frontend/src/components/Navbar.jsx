@@ -6,17 +6,18 @@ import { FiMessageSquare, FiBell } from 'react-icons/fi';
  * Top navigation bar with branding, links, and user actions.
  *
  * @param {Function} onLogoClick - Resets the search/results view when logo is clicked
+ * @param {string} activeLink - The currently active link
  */
-const Navbar = ({ onLogoClick }) => (
+const Navbar = ({ onLogoClick, activeLink }) => (
   <nav className="navbar glass-panel">
     <div className="nav-brand" onClick={onLogoClick} style={{ cursor: 'pointer' }}>
       RideLink
     </div>
 
     <div className="nav-links">
-      <a href="#explore" className="active" onClick={onLogoClick}>Explore</a>
-      <a href="#messages">Messages</a>
-      <a href="#groups">Groups</a>
+      <a href="/" className={activeLink === 'home' ? 'active' : ''} onClick={onLogoClick}>Home</a>
+      <a href="/messages" className={activeLink === 'messages' ? 'active' : ''}>Messages</a>
+      <a href="/groups" className={activeLink === 'groups' ? 'active' : ''}>Groups</a>
     </div>
 
     <div className="nav-actions">

@@ -1,0 +1,302 @@
+/* --- Page & Map Wrappers --- */
+.messages-page-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* The physical Mapbox container */
+.messages-map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Soft overlay to ensure chat text remains highly readable */
+.messages-map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4); 
+  pointer-events: none; /* Lets you drag the map behind the chat */
+  z-index: 1;
+}
+
+/* The container that holds your Navbar and Chat Window */
+.messages-ui-layer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass through to the map... */
+}
+
+/* Re-enable clicks for the actual UI elements */
+.messages-navbar-container {
+  padding: 1.5rem 2rem 0 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.messages-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  border-radius: 24px;
+  overflow: hidden;
+  pointer-events: auto; /* Re-enable clicks for the chat */
+  background: rgba(255, 255, 255, 0.5) !important;
+  /* The global .glass-panel class handles the blur */
+}
+
+/* --- Sidebar Styles --- */
+.chat-sidebar {
+  width: 350px;
+  border-right: 1px solid rgba(255, 255, 255, 0.5); /* Soft transparent border */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.chat-search-pill {
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+}
+
+.chat-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+}
+
+.chat-list-item:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.chat-list-item.active {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.chat-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.chat-info h4 {
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.last-message {
+  font-size: 0.85rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* --- Main Chat Area Styles --- */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.chat-main-header {
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.active-chat-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.active-chat-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.active-chat-profile h3 {
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.active-chat-profile span {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.chat-messages-area {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-bubble-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.message-bubble-wrapper.mine {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.message-bubble p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+}
+
+.msg-time {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  display: block;
+  text-align: right;
+}
+
+/* User's messages inherit the gradient blue theme */
+.bg-blue {
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Other person's messages use a frosted glass look */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 1);
+  color: #0f172a;
+  border-bottom-left-radius: 4px;
+}
+
+/* Input Area at the bottom */
+.chat-input-area {
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.chat-input-pill {
+  flex: 1;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 0; /* Overrides Home.css margins if any */
+}
+
+.send-btn {
+  width: 52px;
+  height: 52px;
+  padding: 0 !important; /* Forces it to be a perfect circle */
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.send-btn:disabled {
+  background: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.empty-chat-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+.empty-chat-state h3 {
+  margin-top: 1rem;
+  color: #475569;
+}
