@@ -12,9 +12,9 @@ const Login = () => {
   
 
 
-  const handleLogin = ()=>{
-
-    fetch('https://localhost:5000/auth/login', {
+  const handleLogin = (e)=>{
+        e.preventDefault();
+    fetch('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,6 +31,14 @@ const Login = () => {
       
     });
   }
+
+  handleGithubLogin = () => {
+    window.location.href = '/auth/github';
+  };
+
+  handleGoogleLogin = () => {
+    window.location.href = '/auth/google';
+  };
 
 
 
@@ -112,11 +120,11 @@ const Login = () => {
 
           {/* OAuth Buttons */}
           <div className="social-login-row">
-            <button type="button" className="social-btn google-btn" onClick={() => handleSocialLogin('google')}>
+            <button type="button" className="social-btn google-btn" onClick={handleGoogleLogin}>
               <FaGoogle size={18} />
               <span>Google</span>
             </button>
-            <button type="button" className="social-btn github-btn" onClick={() => handleSocialLogin('github')}>
+            <button type="button" className="social-btn github-btn" onClick={handleGithubLogin}>
               <FaGithub size={18} />
               <span>GitHub</span>
             </button>

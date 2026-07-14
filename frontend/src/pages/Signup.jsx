@@ -15,7 +15,7 @@ const SignUp = () => {
   const handleSignup = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     
-    fetch('http://localhost:5000/auth/signup', {
+    fetch('/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
