@@ -1,6 +1,6 @@
 package com.mrshaikhmuhammad.ridelink.config;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.GeoPoint;
+import com.mrshaikhmuhammad.ridelink.dto.request.LocationRequestDto;
 import org.springframework.context.annotation.*;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -21,9 +21,9 @@ public class MongoConfig {
     }
 
     @WritingConverter
-    static class GeoPointToDocumentConverter implements Converter<GeoPoint, Document> {
+    static class GeoPointToDocumentConverter implements Converter<LocationRequestDto, Document> {
         @Override
-        public Document convert(GeoPoint source) {
+        public Document convert(LocationRequestDto source) {
             Document doc = new Document();
             doc.put("type", "Point");
             doc.put("coordinates", List.of(source.getX(), source.getY()));
@@ -33,12 +33,12 @@ public class MongoConfig {
     }
 
     @ReadingConverter
-    static class DocumentToGeoPointConverter implements Converter<Document, GeoPoint> {
+    static class DocumentToGeoPointConverter implements Converter<Document, LocationRequestDto> {
         @Override
-        public GeoPoint convert(Document source) {
+        public LocationRequestDto convert(Document source) {
             List<Double> coords = (List<Double>) source.get("coordinates");
             String name = source.getString("name");
-            return new GeoPoint(name, coords.get(0), coords.get(1));
+            return new LocationRequestDto(name, coords.get(0), coords.get(1));
         }
     }
 }

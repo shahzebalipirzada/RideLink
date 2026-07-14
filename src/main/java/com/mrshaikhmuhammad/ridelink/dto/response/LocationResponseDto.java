@@ -3,7 +3,7 @@ package com.mrshaikhmuhammad.ridelink.dto.response;
 import com.fasterxml.jackson.annotation.*;
 import java.util.*;
 
-public record Path(
+public record LocationResponseDto(
         String code,
         List<Route> routes,
         List<Waypoint> waypoints

@@ -1,17 +1,16 @@
 package com.mrshaikhmuhammad.ridelink.dto.response;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
 
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public record RideMatch(
+public record RideResponseDto(
         String origin,
         String destination,
         String departureTime
 ) {
-    public RideMatch(Ride ride) {
+    public RideResponseDto(RideRequestDto ride) {
         this(
                 ride.getOrigin().getName(),
 

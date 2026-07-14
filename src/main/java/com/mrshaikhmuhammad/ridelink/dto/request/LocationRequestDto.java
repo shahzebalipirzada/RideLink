@@ -2,7 +2,6 @@ package com.mrshaikhmuhammad.ridelink.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import tools.jackson.databind.ValueDeserializer;
@@ -12,9 +11,9 @@ import java.util.List;
 
 @Getter
 @JsonDeserialize(using = ValueDeserializer.None.class)
-public class GeoPoint extends GeoJsonPoint{
+public class LocationRequestDto extends GeoJsonPoint{
     private String name;
-    public GeoPoint(String name, double longitude, double latitude){
+    public LocationRequestDto(String name, double longitude, double latitude){
         super(longitude, latitude);
         this.name = name;
     }
@@ -25,13 +24,13 @@ public class GeoPoint extends GeoJsonPoint{
     }
 
     @JsonCreator
-    public static GeoPoint fromJson(
+    public static LocationRequestDto fromJson(
             @JsonProperty("coordinates") List<Double> coordinates,
             @JsonProperty("name") String name
     ) {
         if (coordinates == null || coordinates.size() < 2) {
             throw new IllegalArgumentException("coordinates must have at least 2 elements");
         }
-        return new GeoPoint(name, coordinates.get(0), coordinates.get(1));
+        return new LocationRequestDto(name, coordinates.get(0), coordinates.get(1));
     }
 }

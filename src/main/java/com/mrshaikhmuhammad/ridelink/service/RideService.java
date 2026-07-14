@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.service;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
-import com.mrshaikhmuhammad.ridelink.dto.response.RideMatch;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.response.RideResponseDto;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import com.mrshaikhmuhammad.ridelink.repository.RideRepository;
 import com.mrshaikhmuhammad.ridelink.service.scoring.RideScore;
@@ -28,27 +28,27 @@ public class RideService {
 
     private final int MAX_WAIT_SECONDS = 2*60*60;
 
-    public void saveRide(Ride ride){
+    public void saveRide(RideRequestDto ride){
         ride.setPath(osrmClient);
         rideRepository.save(ride);
     }
 
-    public List<RideMatch> searchRides(Ride requestRide, int radius){
+    public List<RideResponseDto> searchRides(RideRequestDto requestRide, int radius){
         requestRide.setPath(osrmClient);
-        List<Ride> candidates = filterRide(requestRide, radius);
+        List<RideRequestDto> candidates = filterRide(requestRide, radius);
 
         return candidates.stream()
                 .map(candidate -> Map.entry(candidate, similarityScorer.score(requestRide, candidate)))
-                .sorted(Map.Entry.<Ride, Double>comparingByValue().reversed())
-                .map(entry -> new RideMatch(entry.getKey()))
+                .sorted(Map.Entry.<RideRequestDto, Double>comparingByValue().reversed())
+                .map(entry -> new RideResponseDto(entry.getKey()))
                 .toList();
     }
 
-    private List<Ride> filterRide(Ride requestRide, int radius){
+    private List<RideRequestDto> filterRide(RideRequestDto requestRide, int radius){
         Criteria criteria = new Criteria().andOperator(
                 Criteria.where("_id").ne(requestRide.getId()),
 
-                Criteria.where("departure-time")
+                Criteria.where("departureTime")
                         .gt(requestRide.getDepartureTime().minusSeconds(MAX_WAIT_SECONDS))
                         .lt(requestRide.getDepartureTime().plusSeconds(MAX_WAIT_SECONDS)),
 
@@ -60,6 +60,6 @@ public class RideService {
         );
 
         Query query = new Query(criteria);
-        return mongoTemplate.find(query, Ride.class);
+        return mongoTemplate.find(query, RideRequestDto.class);
     }
 }

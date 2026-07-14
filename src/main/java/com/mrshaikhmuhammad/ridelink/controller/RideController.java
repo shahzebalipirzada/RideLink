@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.controller;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
-import com.mrshaikhmuhammad.ridelink.dto.response.RideMatch;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.response.RideResponseDto;
 import com.mrshaikhmuhammad.ridelink.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -17,7 +17,7 @@ public class RideController {
     RideService rideService;
 
     @PostMapping("save")
-    public ResponseEntity<?> saveRides(@RequestBody Ride ride){
+    public ResponseEntity<?> saveRides(@RequestBody RideRequestDto ride){
         try{
             rideService.saveRide(ride);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -28,9 +28,9 @@ public class RideController {
     }
 
     @PostMapping("/search/{radius}")
-    public ResponseEntity<?> searchRides(@RequestBody Ride ride, @PathVariable int radius){
+    public ResponseEntity<?> searchRides(@RequestBody RideRequestDto ride, @PathVariable int radius){
         try{
-            List<RideMatch> rides = rideService.searchRides(ride, radius);
+            List<RideResponseDto> rides = rideService.searchRides(ride, radius);
             return new ResponseEntity<>(rides, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());

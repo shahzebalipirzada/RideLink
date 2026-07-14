@@ -1,8 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.service.scoring;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.Ride;
-import com.mrshaikhmuhammad.ridelink.dto.response.Path;
-import com.mrshaikhmuhammad.ridelink.entity.*;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.entity.type.Role;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +22,9 @@ public class RideScore {
     private static final double WEIGHT_COVERAGE = 0.15;
     private static final double MAX_WAIT_TIME_MINUTES = 120;
 
-    public double score(Ride requestingRide, Ride candidate) {
+    public double score(RideRequestDto requestingRide, RideRequestDto candidate) {
 
-        Ride driver, passenger;
+        RideRequestDto driver, passenger;
         if(requestingRide.getRole() == Role.PASSENGER){
             driver = candidate;
             passenger = requestingRide;
@@ -39,7 +39,7 @@ public class RideScore {
 
         double driverDistance = driver.getPath().routes().get(0).distance();
         double passengerDistance = passenger.getPath().routes().get(0).distance();
-        Path.Route sharedRoute = routeClient.getRoute(
+        LocationResponseDto.Route sharedRoute = routeClient.getRoute(
             List.of(
                     driver.getOrigin(),
                     passenger.getOrigin(),

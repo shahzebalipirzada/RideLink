@@ -1,8 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mrshaikhmuhammad.ridelink.dto.response.Path;
-import com.mrshaikhmuhammad.ridelink.entity.Role;
+import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.entity.type.Role;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import lombok.*;
 import org.bson.types.ObjectId;
@@ -14,18 +13,18 @@ import java.util.List;
 
 @Data
 @Document("ride")
-public class Ride {
+public class RideRequestDto {
     @Id
     ObjectId id;
 
     Role role; //driver passenger
-    GeoPoint origin;
-    GeoPoint destination;
+    LocationRequestDto origin;
+    LocationRequestDto destination;
 
     @Field("departure_time")
     Instant departureTime;
 
-    Path path;
+    LocationResponseDto path;
 
     public void setPath(OsrmRouteClient osrmClient){
         path = osrmClient.getRoute(

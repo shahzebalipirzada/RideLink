@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.external.osrm;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.GeoPoint;
-import com.mrshaikhmuhammad.ridelink.dto.response.Path;
+import com.mrshaikhmuhammad.ridelink.dto.request.LocationRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
 
 import lombok.*;
 import org.springframework.http.*;
@@ -19,9 +19,9 @@ public class OsrmRouteClient {
     private final OsrmProperties osrmProperties;
 
 
-    private String buildUrl(List<GeoPoint> stops){
+    private String buildUrl(List<LocationRequestDto> stops){
         String coordinates = stops.stream()
-                .map(GeoPoint::toString)
+                .map(LocationRequestDto::toString)
                 .collect(Collectors.joining(";"));
 
         return "%s/%s/v1/%s/%s?%s"
@@ -34,9 +34,9 @@ public class OsrmRouteClient {
             );
     }
 
-    public Path getRoute(List<GeoPoint> stops){
+    public LocationResponseDto getRoute(List<LocationRequestDto> stops){
         String url = buildUrl(stops);
-        ResponseEntity<Path> response = restTemplate.exchange(url, HttpMethod.GET, null, Path.class);
+        ResponseEntity<LocationResponseDto> response = restTemplate.exchange(url, HttpMethod.GET, null, LocationResponseDto.class);
         return response.getBody();
     }
 }
