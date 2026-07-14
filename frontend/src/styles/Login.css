@@ -23,24 +23,10 @@
   z-index: 0;
 }
 
-/* --- Existing Styles Below --- */
+/* --- Layout Wrappers --- */
 .login-wrapper {
   position: relative;
   z-index: 1; /* Keeps the UI above the overlay */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-}
-
-/* ... Keep all your other existing login card, pin, and animation CSS here ... */
-
-.login-wrapper {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,6 +52,7 @@
   z-index: 10;
 }
 
+/* --- Header & Typography --- */
 .logo-container {
   display: flex;
   align-items: center;
@@ -90,39 +77,187 @@
   letter-spacing: -1px;
 }
 
-.subtitle {
-  font-size: 0.95rem;
-  color: #64748b;
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-  padding: 0 0.5rem;
+
+/* --- Authentication Form Inputs --- */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
 }
 
-.google-btn {
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.password-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.forgot-link {
+  font-size: 0.8rem;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 9999px;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.input-wrapper .input-icon {
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.input-wrapper input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  color: #334155;
+  background: transparent;
+  font-family: inherit;
+}
+
+.input-wrapper input::placeholder {
+  color: #94a3b8;
+}
+
+/* Submit Button */
+.login-submit-btn {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.login-submit-btn:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* --- Register Text Link --- */
+.register-redirect {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 1.5rem;
+}
+
+.register-redirect a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-redirect a:hover {
+  text-decoration: underline;
+}
+
+/* --- Social Authentication Splitter --- */
+.social-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.social-divider::before {
+  margin-right: 0.75em;
+}
+
+.social-divider::after {
+  margin-left: 0.75em;
+}
+
+/* --- OAuth Buttons --- */
+.social-login-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.social-btn {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 100%;
-  padding: 0.875rem;
+  gap: 8px;
+  padding: 0.75rem;
   background-color: #ffffff;
   color: #334155;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
   border-radius: 9999px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-.google-btn:hover {
+.social-btn:hover {
   background-color: #f8fafc;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  border-color: #94a3b8;
+  border-color: #cbd5e1;
   transform: translateY(-1px);
 }
 
+.google-btn svg {
+  color: #ea4335;
+}
+
+.github-btn svg {
+  color: #24292e;
+}
+
+/* --- Terms and Conditions --- */
 .terms {
   margin-top: 2rem;
   font-size: 0.75rem;
@@ -142,15 +277,9 @@
 
 /* --- Floating Animation Keyframes --- */
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
 }
 
 /* Floating Pins */
@@ -169,29 +298,14 @@
   box-shadow: 0 8px 16px rgba(0,0,0,0.06);
   border: 1px solid rgba(255, 255, 255, 0.8);
   z-index: 5;
-  
-  /* Apply the float animation */
   animation: float 4s ease-in-out infinite;
 }
 
-/* Stagger the animation delays so they don't move in perfect sync */
-.pin-1 { 
-  top: 5%; 
-  left: 10%; 
-  animation-delay: 0s;
-}
-.pin-2 { 
-  top: 15%; 
-  right: 10%; 
-  animation-delay: 1.5s;
-}
-.pin-3 { 
-  bottom: 25%; 
-  right: 15%; 
-  animation-delay: 0.7s;
-}
+.pin-1 { top: 5%; left: 10%; animation-delay: 0s; }
+.pin-2 { top: 15%; right: 10%; animation-delay: 1.5s; }
+.pin-3 { bottom: 25%; right: 15%; animation-delay: 0.7s; }
 
-/* Bottom Features */
+/* --- Bottom Features --- */
 .features-container {
   display: flex;
   justify-content: center;
