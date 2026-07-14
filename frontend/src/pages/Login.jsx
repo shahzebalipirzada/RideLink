@@ -1,9 +1,40 @@
 import React from 'react';
+import {useState} from 'react';
 import '../styles/Login.css';
 import { FaLocationDot, FaShieldHalved, FaUserGroup, FaEye } from "react-icons/fa6";
-import { FcGoogle } from "react-icons/fc";
+import { FaGoogle, FaGithub} from "react-icons/fa";
+import { FiMail, FiLock } from "react-icons/fi";
+
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  
+
+
+  const handleLogin = ()=>{
+
+    fetch('https://localhost:5000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+     
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      
+    });
+  }
+
+
+
+
   return (
     <div className="login-page-background">
       <div className="login-wrapper">
@@ -17,9 +48,9 @@ const Login = () => {
         <div className="floating-pin pin-3">
           <FaLocationDot className="pin-icon" color="#10b981" /> Suburb → Downtown
         </div>
-
-        {/* Main Glassmorphism Card */}
+{/* Main Glassmorphism Card */}
         <div className="login-card">
+          
           <div className="logo-container">
             <div className="logo-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,14 +64,63 @@ const Login = () => {
           </div>
 
           <h1 className="title">Travel Together.<br />Arrive Together.</h1>
-          <p className="subtitle">
-            Discover nearby travel groups, connect with people heading to the same destination, and make every journey smarter and safer.
+
+          {/* Credentials Form */}
+          <form className="login-form">
+            <div className="input-group">
+             
+              <div className="input-wrapper">
+                <FiMail className="input-icon" color="#64748b" />
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="input-group">
+         
+              <div className="input-wrapper">
+                <FiLock className="input-icon" color="#64748b" />
+                <input 
+                  type="password" 
+                  placeholder="Enter your password" 
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="find-btn login-submit-btn" onClick={handleLogin}>
+              Login
+            </button>
+          </form>
+
+          {/* Toggle Option to Register */}
+          <p className="register-redirect">
+            Don't have an account? <a href="/signup">Signup here</a>
           </p>
 
-          <button className="google-btn">
-            <FcGoogle size={22} />
-            Continue with Google
-          </button>
+          {/* Social Authentication Splitter */}
+          <div className="social-divider">
+            <span>or continue with</span>
+          </div>
+
+          {/* OAuth Buttons */}
+          <div className="social-login-row">
+            <button type="button" className="social-btn google-btn" onClick={() => handleSocialLogin('google')}>
+              <FaGoogle size={18} />
+              <span>Google</span>
+            </button>
+            <button type="button" className="social-btn github-btn" onClick={() => handleSocialLogin('github')}>
+              <FaGithub size={18} />
+              <span>GitHub</span>
+            </button>
+          </div>
 
           <p className="terms">
             By continuing, you agree to our <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>.
