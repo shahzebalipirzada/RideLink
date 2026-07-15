@@ -4,6 +4,7 @@ import '../styles/Login.css';
 import { FaLocationDot, FaShieldHalved, FaUserGroup, FaEye } from "react-icons/fa6";
 import { FaGoogle, FaGithub} from "react-icons/fa";
 import { FiMail, FiLock } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -24,6 +25,7 @@ const Login = () => {
     .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
+      useNavigate('/')
      
     })
     .catch((error) => {
@@ -32,16 +34,14 @@ const Login = () => {
     });
   }
 
-  handleGithubLogin = () => {
-    window.location.href = '/auth/github';
+  const handleGithubLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+
   };
 
-  handleGoogleLogin = () => {
-    window.location.href = '/auth/google';
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   };
-
-
-
 
   return (
     <div className="login-page-background">

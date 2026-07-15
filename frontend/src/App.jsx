@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import Signup from "./pages/Signup";
 
 
+
 function App() {
   const navigate = useNavigate();
   return (
@@ -15,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} /> 
          <Route path="/messages" element={<Messages onNavigateHome={() => navigate('/') } />} />
-          {/* <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} /> */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
       </Routes>
       
   
