@@ -1,4 +1,4 @@
-package com.mrshaikhmuhammad.ridelink.security.oauth_handler;
+package com.mrshaikhmuhammad.ridelink.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;

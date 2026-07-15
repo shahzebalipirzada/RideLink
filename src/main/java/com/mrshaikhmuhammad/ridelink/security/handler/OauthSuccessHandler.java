@@ -1,8 +1,6 @@
-package com.mrshaikhmuhammad.ridelink.security.oauth_handler;
+package com.mrshaikhmuhammad.ridelink.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mrshaikhmuhammad.ridelink.dto.request.SignupRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.response.LoginResponseDto;
 import com.mrshaikhmuhammad.ridelink.entity.User;
 import com.mrshaikhmuhammad.ridelink.entity.type.OauthProviderType;
 import com.mrshaikhmuhammad.ridelink.repository.UserRepository;
@@ -12,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -19,8 +18,10 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.Duration;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +36,14 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private final AuthService authService;
 
-    private final ObjectMapper objectMapper;
+    @Value("${security.oauth.redirect}")
+    private String redirectUrl;
+
+    @Value("${security.jwt.access-token.age}")
+    private int accessTokenExpiration;
+
+    @Value("${security.jwt.refresh-token.age}")
+    private int refreshTokenExpiration;
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
@@ -53,7 +61,7 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
 
         if(storedOauthUser == null && storedEmailUser == null){
             String username = authUtil.getUsername(oauthUser, registrationId, providerId );
-            SignupRequestDto signupRequestDto = new SignupRequestDto(username, null);
+            SignupRequestDto signupRequestDto = new SignupRequestDto(username, null, null);
 
             try {
                 storedOauthUser = authService.signup(signupRequestDto, providerId, providerType);
@@ -62,7 +70,7 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
             }
         }
         else if(storedOauthUser != null){
-            if(email != null || email.isBlank() || email != storedEmailUser.getUsername()) {
+            if(email != null && !email.isBlank() && email != storedEmailUser.getUsername()) {
                 storedOauthUser.setUsername(email);
                 userRepository.save(storedOauthUser);
             }
@@ -71,16 +79,30 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
             throw new BadCredentialsException("this email is already registered with an other provider");
         }
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto(
-                storedOauthUser.getId(),
-                authUtil.generateAccessToken(storedOauthUser)
+        ResponseCookie accessTokenCookie = ResponseCookie.from("access_token", authUtil.generateAccessToken(storedOauthUser))
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .path("/")
+                .maxAge(Duration.ofMillis(accessTokenExpiration))
+                .build();
+
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", authUtil.generateRefreshToken(storedOauthUser))
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .path("/")
+                .maxAge(Duration.ofMillis(refreshTokenExpiration))
+                .build();
+
+        response.addHeader(
+                HttpHeaders.SET_COOKIE, accessTokenCookie.toString()
         );
-
-        ResponseEntity<LoginResponseDto> loginResponse = ResponseEntity.ok(loginResponseDto);
-
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(objectMapper.writeValueAsString(loginResponse.getBody()));
+        response.addHeader(
+                HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()
+        );
+        response.sendRedirect(
+                UriComponentsBuilder.fromUriString(this.redirectUrl).build().toString()
+        );
     }
-
 }
