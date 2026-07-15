@@ -17,8 +17,14 @@ import java.util.Date;
 
 @Component
 public class AuthUtil {
-    @Value("${jwt.security.key}")
+    @Value("${security.jwt.key}")
     private String jwtSecurityKey;
+
+    @Value("${security.jwt.access-token.age}")
+    private int accessTokenAge;
+
+    @Value("${security.jwt.refresh-token.age}")
+    private int refreshTokenAge;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,14 +33,22 @@ public class AuthUtil {
         return Keys.hmacShaKeyFor(jwtSecurityKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateAccessToken(User user){
+    private String generateToken(User user, int expiration){
         return Jwts.builder()
                 .subject(user.getUsername())
                 .claim("id", user.getId())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSecretKey())
                 .compact();
+    }
+
+    public String generateAccessToken(User user){
+        return generateToken(user, accessTokenAge);
+    }
+
+    public String generateRefreshToken(User user){
+        return generateToken(user, refreshTokenAge);
     }
 
 

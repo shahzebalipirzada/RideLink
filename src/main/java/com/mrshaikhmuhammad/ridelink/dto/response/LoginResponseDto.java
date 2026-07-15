@@ -9,4 +9,5 @@ import org.bson.types.ObjectId;
 public class LoginResponseDto {
     ObjectId userId;
     String accessToken;
+    String refreshToken;
 }

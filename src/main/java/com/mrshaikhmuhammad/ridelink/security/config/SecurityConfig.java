@@ -1,8 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.security.config;
 
 import com.mrshaikhmuhammad.ridelink.security.JwtAuthFilter;
-import com.mrshaikhmuhammad.ridelink.security.oauth_handler.OauthFailureHandler;
-import com.mrshaikhmuhammad.ridelink.security.oauth_handler.OauthSuccessHandler;
+import com.mrshaikhmuhammad.ridelink.security.handler.OauthFailureHandler;
+import com.mrshaikhmuhammad.ridelink.security.handler.OauthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +42,7 @@ public class SecurityConfig {
                                 .successHandler(successHandler)
                                 .failureHandler(failureHandler)
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin(Customizer.withDefaults());
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
 
