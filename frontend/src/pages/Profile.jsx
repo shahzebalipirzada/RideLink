@@ -18,10 +18,12 @@ const Profile = () => {
     interactive: false 
   });
 
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+
+
   // Simplified Mock User Data
   const user = {
-    name: "",
-    email: "",
     details: {
       Phone: "+92 300 1234567",
       University: "IBA Sukkur",
@@ -46,8 +48,8 @@ useEffect(() => {
       return response.json();
     })
     .then(data => {
-      user.name = data.name;
-      user.email = data.email;
+      setName(data.name);
+      setEmail(data.email);
     })
     .catch(error => {
       console.error('Error fetching user profile:', error);
@@ -85,8 +87,8 @@ useEffect(() => {
               <div className="avatar-placeholder">
                 <FiUser className="avatar-icon" />
               </div>
-              <h1 className="profile-name">{user.name}</h1>
-              <p className="profile-email">{user.email}</p>
+              <h1 className="profile-name">{name}</h1>
+              <p className="profile-email">{email}</p>
             </header>
 
             {/* Basic Details Box */}
