@@ -18,23 +18,13 @@ public class RideController {
 
     @PostMapping("save")
     public ResponseEntity<?> saveRides(@RequestBody RideRequestDto ride){
-        try{
-            rideService.saveRide(ride);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        rideService.saveRide(ride);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/search/{radius}")
     public ResponseEntity<?> searchRides(@RequestBody RideRequestDto ride, @PathVariable int radius){
-        try{
-            List<RideResponseDto> rides = rideService.searchRides(ride, radius);
-            return new ResponseEntity<>(rides, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        List<RideResponseDto> rides = rideService.searchRides(ride, radius);
+        return new ResponseEntity<>(rides, HttpStatus.OK);
     }
 }

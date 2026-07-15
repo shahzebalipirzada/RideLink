@@ -19,19 +19,14 @@ public class AuthController {
 
     @PostMapping("/login")
     ResponseEntity<?> login(@RequestBody LoginRequestDto request){
-        try {
-            return new ResponseEntity<>(authService.login(request), HttpStatus.OK);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(authService.login(request), HttpStatus.OK);
     }
 
     @PostMapping("/signup")
     ResponseEntity<?> signup(@RequestBody SignupRequestDto request){
         try{
             return new ResponseEntity<>(authService.signup(request), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (Exception e){
             System.err.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
