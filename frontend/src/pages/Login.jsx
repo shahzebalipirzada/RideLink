@@ -32,12 +32,12 @@ const Login = () => {
     });
   }
 
-  handleGithubLogin = () => {
-    window.location.href = '/auth/github';
+  const handleGithubLogin = () => {
+    window.location.href = '/oauth2/authorization/github';
   };
 
-  handleGoogleLogin = () => {
-    window.location.href = '/auth/google';
+  const handleGoogleLogin = () => {
+    window.location.href = '/oauth2/authorization/google';
   };
 
 
