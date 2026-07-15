@@ -24,6 +24,7 @@ public class User implements UserDetails {
     @Id
     private ObjectId id;
 
+    private String name;
     @NonNull
     @Indexed
     private String username;

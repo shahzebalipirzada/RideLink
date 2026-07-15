@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.InstanceAlreadyExistsException;
+
 
 @Service
 public class AuthService {
@@ -32,23 +34,25 @@ public class AuthService {
         );
 
         User user = (User) auth.getPrincipal();
-        String jwtSecurityToken = authUtil.generateAccessToken(user);
-        return new LoginResponseDto(user.getId(), jwtSecurityToken);
+        String accessToken = authUtil.generateAccessToken(user);
+        String refreshToken = authUtil.generateRefreshToken(user);
+        return new LoginResponseDto(user.getId(), accessToken, refreshToken);
     }
 
-    public SignupResponseDto signup(SignupRequestDto request) throws Exception{
-        User user = signup(request, null, null);
+    public SignupResponseDto signup(SignupRequestDto request) throws InstanceAlreadyExistsException {
+        User user = signup(request, null, OauthProviderType.EMAIL);
         return new SignupResponseDto(user.getId(), user.getUsername());
     }
 
-    public User signup(SignupRequestDto request, String providerId, OauthProviderType providerType) throws Exception{
+    public User signup(SignupRequestDto request, String providerId, OauthProviderType providerType) throws InstanceAlreadyExistsException {
         User user = userRepository.findByUsername(request.getUsername()).orElse(null);
 
         if(user != null){
-            throw new Exception("user already exists");
+            throw new InstanceAlreadyExistsException("user already exists");
         }
         else{
             user = User.builder()
+                    .name(request.getName())
                     .username(request.getUsername())
                     .providerId(providerId)
                     .providerType(providerType)
