@@ -21,13 +21,15 @@ const Navbar = ({ onLogoClick, activeLink }) => (
     </div>
 
     <div className="nav-actions">
-      <button className="icon-btn" aria-label="Messages"><FiMessageSquare /></button>
-      <button className="icon-btn" aria-label="Notifications"><FiBell /></button>
+      {/* <button className="icon-btn" aria-label="Messages"><FiMessageSquare /></button>
+      <button className="icon-btn" aria-label="Notifications"><FiBell /></button> */}
       <div className="profile-avatar">
+        <a href="/Profile">
         <img
           src="https://ui-avatars.com/api/?name=SA&background=2563eb&color=fff"
           alt="User profile"
         />
+        </a>
       </div>
     </div>
   </nav>

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Messages from "./pages/Messages";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 
 
@@ -18,6 +19,7 @@ function App() {
          <Route path="/messages" element={<Messages onNavigateHome={() => navigate('/') } />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Profile" element={<Profile />} />
       </Routes>
       
   

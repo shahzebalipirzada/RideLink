@@ -1,0 +1,179 @@
+/* --- Layout Wrapper --- */
+.profile-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.profile-overlay {
+  background: rgba(241, 245, 249, 0); 
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.profile-main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the card perfectly on the screen */
+  padding: 2rem;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* --- Main Glassmorphism Card --- */
+.profile-card {
+  width: 100%;
+  max-width: 450px; /* Made slightly narrower for a focused identity card look */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Header & Avatar --- */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+  border: 4px solid #ffffff;
+}
+
+.avatar-icon {
+  font-size: 2.8rem;
+  color: #ffffff;
+}
+
+.profile-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.5px;
+}
+
+.profile-email {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+/* --- Basic Details Box --- */
+.basic-details-container {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.details-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding-bottom: 0.5rem;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-label {
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* --- Action Buttons --- */
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.875rem;
+  border-radius: 9999px; /* Pill shape */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+/* Primary Edit Button */
+.btn-edit {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.btn-edit:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
+}
+
+/* Secondary Logout Button */
+.btn-logout {
+  background-color: #ffffff;
+  color: #ef4444;
+  border: 1px solid #fee2e2;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.05);
+}
+
+.btn-logout:hover {
+  background-color: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
+  transform: translateY(-2px);
+}
