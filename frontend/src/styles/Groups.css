@@ -7,9 +7,9 @@
 }
 
 .groups-overlay {
-  background: rgba(241, 245, 249, 0.75); 
-  backdrop-filter: blur(8px); 
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(241, 245, 249, 0); 
+  /* backdrop-filter: blur(8px);  */
+  /* -webkit-backdrop-filter: blur(8px); */
 }
 
 .groups-main-content {

@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiEdit2, FiLogOut } from 'react-icons/fi';
-
 import { useMap } from '../hooks/useMap';
 import Navbar from '../components/Navbar';
 import '../styles/Profile.css';
@@ -18,8 +17,8 @@ const Profile = () => {
     interactive: false 
   });
 
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
+    const [name, setName] = useState('Loading...');
+    const [email, setEmail] = useState('Loading...');
 
 
   // Simplified Mock User Data
@@ -31,6 +30,8 @@ const Profile = () => {
       Joined: "August 2025"
     }
   };
+
+
 
 
 useEffect(() => { 
