@@ -3,7 +3,9 @@ package com.mrshaikhmuhammad.ridelink.controller;
 import com.mrshaikhmuhammad.ridelink.dto.request.LoginRequestDto;
 import com.mrshaikhmuhammad.ridelink.dto.request.SignupRequestDto;
 import com.mrshaikhmuhammad.ridelink.security.AuthService;
+import com.mrshaikhmuhammad.ridelink.security.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,12 @@ public class AuthController {
 
     @PostMapping("/login")
     ResponseEntity<?> login(@RequestBody LoginRequestDto request){
-        return new ResponseEntity<>(authService.login(request), HttpStatus.OK);
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.LOCATION, "/")
+                .header(HttpHeaders.SET_COOKIE, response.accessTokenCookie().toString())
+                .header(HttpHeaders.SET_COOKIE, response.refreshTokenCookie().toString())
+                .body(response.loginResponseDto());
     }
 
     @PostMapping("/signup")

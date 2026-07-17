@@ -28,15 +28,22 @@ public class AuthService {
     PasswordEncoder passwordEncoder;
 
 
-    public LoginResponseDto login(LoginRequestDto request){
+    public LoginResponse login(LoginRequestDto request){
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
         User user = (User) auth.getPrincipal();
-        String accessToken = authUtil.generateAccessToken(user);
-        String refreshToken = authUtil.generateRefreshToken(user);
-        return new LoginResponseDto(user.getId(), accessToken, refreshToken);
+        LoginResponseDto loginResponseDto = new LoginResponseDto(
+                user.getId(),
+                user.getUsername()
+        );
+
+        return new LoginResponse(
+                loginResponseDto,
+                authUtil.generateAccessTokenCookie(user),
+                authUtil.generateRefreshTokenCookie(user)
+        );
     }
 
     public SignupResponseDto signup(SignupRequestDto request) throws InstanceAlreadyExistsException {
