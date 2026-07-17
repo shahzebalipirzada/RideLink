@@ -15,6 +15,21 @@ spring:
           github:
             client-id: Ov23lixi13i3bjhu1ddJ
             client-secret: 056291c420c27f664682c87e248a536728da8ae0
+            scope:
+              - read:user
+              - user:email
+
+          google:
+            client-id: 652420256599-17fphlh94fiu0731ct3lmi9cht892adn.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - openid
+              - profile
+              - email
+
+server:
+  servlet:
+    context-path: /backend/v1
 
 security:
   jwt:
@@ -34,3 +49,5 @@ osrm:
     options:
       - option: geometries
         value: polyline6  # polyline6, geojson
+
+debug: true
