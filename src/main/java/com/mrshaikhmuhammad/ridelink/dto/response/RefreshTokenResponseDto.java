@@ -1,4 +1,6 @@
 package com.mrshaikhmuhammad.ridelink.dto.response;
 
-public record RefreshTokenResponseDto() {
+import org.springframework.http.ResponseCookie;
+
+public record RefreshTokenResponseDto(ResponseCookie accessTokenCookie, ResponseCookie refreshTokenCookie) {
 }

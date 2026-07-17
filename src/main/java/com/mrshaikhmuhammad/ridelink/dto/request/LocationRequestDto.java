@@ -13,6 +13,7 @@ import java.util.List;
 @JsonDeserialize(using = ValueDeserializer.None.class)
 public class LocationRequestDto extends GeoJsonPoint{
     private String name;
+
     public LocationRequestDto(String name, double longitude, double latitude){
         super(longitude, latitude);
         this.name = name;

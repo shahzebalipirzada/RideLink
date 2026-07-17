@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.error;
 
-public class RefreshTokenException extends RuntimeException {
-    public RefreshTokenException(String message) {
+public class InvalidRefreshTokenException extends RuntimeException {
+    public InvalidRefreshTokenException(String message) {
         super(message);
     }
 }

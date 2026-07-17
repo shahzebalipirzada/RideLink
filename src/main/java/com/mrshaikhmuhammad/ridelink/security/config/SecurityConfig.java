@@ -1,12 +1,10 @@
 package com.mrshaikhmuhammad.ridelink.security.config;
 
-import com.mrshaikhmuhammad.ridelink.security.JwtAuthFilter;
-import com.mrshaikhmuhammad.ridelink.security.handler.OauthFailureHandler;
-import com.mrshaikhmuhammad.ridelink.security.handler.OauthSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import com.mrshaikhmuhammad.ridelink.security.*;
+import com.mrshaikhmuhammad.ridelink.security.handler.*;
+
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,7 +46,3 @@ public class SecurityConfig {
 
     }
 }
-
-
-// 1. configure role based data access
-// 2. implements sucess and failture handler

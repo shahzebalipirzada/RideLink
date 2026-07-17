@@ -31,6 +31,7 @@ public class User implements UserDetails {
     private String password;
     private String providerId;
     private OauthProviderType providerType;
+    private String refreshToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

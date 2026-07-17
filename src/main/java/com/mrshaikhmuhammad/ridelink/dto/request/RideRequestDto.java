@@ -1,6 +1,6 @@
 package com.mrshaikhmuhammad.ridelink.dto.request;
 
-import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.dto.response.*;
 import com.mrshaikhmuhammad.ridelink.entity.type.Role;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import lombok.*;

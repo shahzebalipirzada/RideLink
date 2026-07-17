@@ -32,12 +32,6 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
     @Value("${security.oauth.redirect}")
     private String redirectUrl;
 
-    @Value("${security.jwt.access-token.age}")
-    private int accessTokenExpiration;
-
-    @Value("${security.jwt.refresh-token.age}")
-    private int refreshTokenExpiration;
-
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
