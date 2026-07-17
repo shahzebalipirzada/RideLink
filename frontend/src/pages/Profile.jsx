@@ -4,6 +4,8 @@ import { FiUser, FiEdit2, FiLogOut } from 'react-icons/fi';
 import { useMap } from '../hooks/useMap';
 import Navbar from '../components/Navbar';
 import '../styles/Profile.css';
+import EditProfileModal from '../components/EditProfileModal';
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -20,18 +22,24 @@ const Profile = () => {
     const [name, setName] = useState('Loading...');
     const [email, setEmail] = useState('Loading...');
 
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    Phone: "+92 300 1234567",
+    University: "IBA Sukkur",
+    Role: "Student",
+    Joined: "August 2025"
+  });
 
-  // Simplified Mock User Data
-  const user = {
-    details: {
-      Phone: "+92 300 1234567",
-      University: "IBA Sukkur",
-      Role: "Student",
-      Joined: "August 2025"
-    }
+
+  const handleEdit = () => {
+    setIsEditModalOpen(true);
   };
 
 
+  // Create a function to receive the saved data
+  const handleSaveDetails = (updatedDetails) => {
+    setUserDetails(updatedDetails);
+  };
 
 
 useEffect(() => { 
@@ -65,10 +73,6 @@ useEffect(() => {
     navigate('/login');
   };
 
-  const handleEdit = () => {
-    console.log("Navigating to edit details form...");
-    // navigate('/profile/edit');
-  };
 
   return (
     <div className="profile-wrapper">
@@ -95,14 +99,14 @@ useEffect(() => {
             {/* Basic Details Box */}
             <div className="basic-details-container">
               <h3 className="details-title">Basic Details</h3>
-              <ul className="details-list">
-                {Object.entries(user.details).map(([key, value]) => (
-                  <li key={key} className="detail-item">
-                    <span className="detail-label">{key}</span>
-                    <span className="detail-value">{value}</span>
-                  </li>
-                ))}
-              </ul>
+             <ul className="details-list">
+        {Object.entries(userDetails).map(([key, value]) => (
+          <li key={key} className="detail-item">
+            <span className="detail-label">{key}</span>
+            <span className="detail-value">{value}</span>
+          </li>
+        ))}
+      </ul>
             </div>
 
             {/* Action Buttons */}
@@ -118,6 +122,12 @@ useEffect(() => {
           </div>
         </main>
       </div>
+      <EditProfileModal 
+        isOpen={isEditModalOpen} 
+        onClose={() => setIsEditModalOpen(false)} 
+        initialDetails={userDetails}
+        onSave={handleSaveDetails}
+      />
     </div>
   );
 };
