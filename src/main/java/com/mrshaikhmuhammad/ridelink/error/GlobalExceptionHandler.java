@@ -62,8 +62,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidRefreshTokenException.class)
-    public ResponseEntity<ApiError> invalidReefreshTokenException(InvalidRefreshTokenException ex){
+    public ResponseEntity<ApiError> invalidRefreshTokenException(InvalidRefreshTokenException ex){
         ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        return apiError.getResponseEntity();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> illegalArgumentException(IllegalArgumentException ex){
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
         return apiError.getResponseEntity();
     }
 

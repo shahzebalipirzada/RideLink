@@ -1,7 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.external.osrm;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.LocationRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationRequestDto;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
 
 import lombok.*;
 import org.springframework.http.*;

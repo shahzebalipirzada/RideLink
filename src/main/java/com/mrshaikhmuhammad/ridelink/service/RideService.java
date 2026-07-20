@@ -1,10 +1,16 @@
 package com.mrshaikhmuhammad.ridelink.service;
 
 import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.entity.Ride;
 import com.mrshaikhmuhammad.ridelink.dto.response.RideResponseDto;
+import com.mrshaikhmuhammad.ridelink.entity.User;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import com.mrshaikhmuhammad.ridelink.repository.RideRepository;
+import com.mrshaikhmuhammad.ridelink.repository.UserRepository;
+import com.mrshaikhmuhammad.ridelink.security.AuthUtil;
 import com.mrshaikhmuhammad.ridelink.service.scoring.RideScore;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,51 +21,64 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class RideService {
 
-    @Autowired
-    RideRepository rideRepository;
-    @Autowired
-    OsrmRouteClient osrmClient;
-    @Autowired
-    MongoTemplate mongoTemplate;
-    @Autowired
-    RideScore similarityScorer;
+    private final UserRepository userRepository;
+    private final OsrmRouteClient osrmClient;
+    private final MongoTemplate mongoTemplate;
+    private final RideScore similarityScorer;
+    private final AuthUtil authUtil;
 
     private final int MAX_WAIT_SECONDS = 2*60*60;
 
-    public void saveRide(RideRequestDto ride){
-        ride.setPath(osrmClient);
-        rideRepository.save(ride);
+    public void createRide(RideRequestDto dto){
+        User user = authUtil.getAuthenticatedUser();
+        Ride ride = new Ride(
+            dto,
+            osrmClient.getRoute(List.of(dto.origin(), dto.destination()))
+        );
+
+        if(user.getCreatedRides() == null){
+            user.setCreatedRides(new ArrayList<>());
+        }
+        user.getCreatedRides().add(ride);
+        userRepository.save(user);
     }
 
-    public List<RideResponseDto> searchRides(RideRequestDto requestRide, int radius){
-        requestRide.setPath(osrmClient);
-        List<RideRequestDto> candidates = filterRide(requestRide, radius);
+    public RideResponseDto searchRides(RideRequestDto dto, int radius){
+        Ride ride = new Ride(
+            dto,
+            osrmClient.getRoute(List.of(dto.origin(), dto.destination()))
+        );
 
-        return candidates.stream()
-                .map(candidate -> Map.entry(candidate, similarityScorer.score(requestRide, candidate)))
-                .sorted(Map.Entry.<RideRequestDto, Double>comparingByValue().reversed())
-                .map(entry -> new RideResponseDto(entry.getKey()))
+        List<Ride> candidates = filterRide(ride, radius);
+
+        List<RideResponseDto.RideSuggestion> suggestions = candidates.stream()
+                .map(candidate -> Map.entry(candidate, similarityScorer.score(ride, candidate)))
+                .sorted(Map.Entry.<Ride, Double>comparingByValue().reversed())
+                .map(entry -> new RideResponseDto.RideSuggestion(entry.getKey()))
                 .toList();
+
+        return new RideResponseDto(suggestions);
     }
 
-    private List<RideRequestDto> filterRide(RideRequestDto requestRide, int radius){
+    private List<Ride> filterRide(Ride ride, int radius){
         Criteria criteria = new Criteria().andOperator(
-                Criteria.where("_id").ne(requestRide.getId()),
+                Criteria.where("_id").ne(ride.getId()),
 
                 Criteria.where("departureTime")
-                        .gt(requestRide.getDepartureTime().minusSeconds(MAX_WAIT_SECONDS))
-                        .lt(requestRide.getDepartureTime().plusSeconds(MAX_WAIT_SECONDS)),
+                        .gt(ride.getDepartureTime().minusSeconds(MAX_WAIT_SECONDS))
+                        .lt(ride.getDepartureTime().plusSeconds(MAX_WAIT_SECONDS)),
 
-                Criteria.where("origin")
+                Criteria.where("origin.coordinate")
                         .withinSphere(new Circle(
-                                requestRide.getOrigin(),
+                                ride.getOrigin().getCoordinate(),
                                 new Distance(radius, Metrics.KILOMETERS)
                         ))
         );
 
         Query query = new Query(criteria);
-        return mongoTemplate.find(query, RideRequestDto.class);
+        return mongoTemplate.find(query, Ride.class);
     }
 }

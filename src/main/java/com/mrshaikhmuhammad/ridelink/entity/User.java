@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class User implements UserDetails {
     private String providerId;
     private OauthProviderType providerType;
     private String refreshToken;
+
+    @Builder.Default
+    private List<Ride> createdRides = new ArrayList<>();
+    @Builder.Default
+    private List<Ride> joinedRides = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

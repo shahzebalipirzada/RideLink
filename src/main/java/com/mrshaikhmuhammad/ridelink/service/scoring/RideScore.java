@@ -1,7 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.service.scoring;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.response.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationRequestDto;
+import com.mrshaikhmuhammad.ridelink.entity.Ride;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
 import com.mrshaikhmuhammad.ridelink.entity.type.Role;
 import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class RideScore {
     private static final double WEIGHT_COVERAGE = 0.15;
     private static final double MAX_WAIT_TIME_MINUTES = 120;
 
-    public double score(RideRequestDto requestingRide, RideRequestDto candidate) {
+    public double score(Ride requestingRide, Ride candidate) {
 
-        RideRequestDto driver, passenger;
+        Ride driver, passenger;
         if(requestingRide.getRole() == Role.PASSENGER){
             driver = candidate;
             passenger = requestingRide;
@@ -41,10 +42,10 @@ public class RideScore {
         double passengerDistance = passenger.getPath().routes().get(0).distance();
         LocationResponseDto.Route sharedRoute = routeClient.getRoute(
             List.of(
-                    driver.getOrigin(),
-                    passenger.getOrigin(),
-                    passenger.getDestination(),
-                    driver.getDestination()
+                    new LocationRequestDto(driver.getOrigin()),
+                    new LocationRequestDto(passenger.getOrigin()),
+                    new LocationRequestDto(passenger.getDestination()),
+                    new LocationRequestDto(driver.getDestination())
             )
         ).routes().get(0);
 
@@ -53,11 +54,9 @@ public class RideScore {
                 (long) sharedRoute.legs().get(0).duration()
         );
 
-        double score = (WEIGHT_DETOUR   * detourScore(driverDistance, sharedRoute.distance()))
-                     + (WEIGHT_COVERAGE * coverageScore(driverDistance, passengerDistance))
-                     + (WEIGHT_TIME     *  timeScore(driverDepartureTime, passengerDepartureTime));
-
-        return score;
+        return (WEIGHT_DETOUR   * detourScore(driverDistance, sharedRoute.distance()))
+                + (WEIGHT_COVERAGE * coverageScore(driverDistance, passengerDistance))
+                + (WEIGHT_TIME     *  timeScore(driverDepartureTime, passengerDepartureTime));
     }
 
     public double timeScore(Instant driverArrival, Instant passengerArrival) {

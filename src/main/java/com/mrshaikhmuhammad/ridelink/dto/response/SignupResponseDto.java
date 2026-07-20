@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
 
-@Data
-@AllArgsConstructor
-public class SignupResponseDto {
-    ObjectId id;
-    String username;
-}
+public record SignupResponseDto (
+    ObjectId id,
+    String username
+){}

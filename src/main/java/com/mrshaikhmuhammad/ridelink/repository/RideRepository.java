@@ -1,8 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.repository;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.entity.Ride;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface RideRepository extends MongoRepository<RideRequestDto, ObjectId> {
+public interface RideRepository extends MongoRepository<Ride, ObjectId> {
 }
