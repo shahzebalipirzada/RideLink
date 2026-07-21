@@ -3,33 +3,31 @@ import {useState} from 'react';
 import '../styles/Login.css';
 import {FaGoogle, FaGithub, FaLocationDot, FaShieldHalved, FaUserGroup, FaEye, FaRegUser } from "react-icons/fa6";
 import { FiMail, FiLock } from "react-icons/fi";
-
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-
+  const navigate = useNavigate();
 
 
   const handleSignup = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     
-    fetch('/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email: username, password }),
-    })
-    .then(response => response.json())
+    sendRequest('/auth/signup', { name, username, password }, 'POST')
     .then(data => {
       console.log('Success:', data);
-      // Handle successful signup (e.g., redirect to login page)
+      navigate('/login');
     })
     .catch((error) => {
-      console.error('Error:', error);
-      // Handle signup error (e.g., show error message)
+      console.error('Signup error:', error);
+      if (error.status === 409) {
+        // e.g. email already registered — adjust to whatever your backend actually returns
+        alert('Account already exists');
+      } else {
+        console.log('Signup failed, please try again');
+      }
     });
 
   };
