@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Groups from "./pages/Groups";
-
+import MyGroups from "./pages/MyGroups";
 
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Groups" element={<Groups />} />
+          <Route path="/mygroups" element={<MyGroups />}/>
       </Routes>
       
   

@@ -1,10 +1,9 @@
-// src/services/groupService.js
-const API_BASE = '/ride'; // matches your existing proxy rule
+import sendRequest from '../utility/sendRequest'; // adjust path to wherever you put it
 
 function toGeoPoint(locationData) {
   return {
     name: locationData.name,
-    type: 'Point',
+    // type: 'Point',
     coordinates: [locationData.longitude, locationData.latitude],
   };
 }
@@ -20,16 +19,5 @@ function toApiPayload(groupData) {
 
 export async function createGroup(groupData) {
   const payload = toApiPayload(groupData);
-
-  const response = await fetch(`${API_BASE}/save`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to create group: ${response.status}`);
-  }
-
-  return response.json();
+  return sendRequest('/ride/create', payload, 'POST');
 }
