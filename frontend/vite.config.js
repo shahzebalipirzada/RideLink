@@ -16,6 +16,10 @@ export default defineConfig({
       "/user": {
         target: "http://localhost:8080/backend/v1",
         changeOrigin: true
+      },
+        "/ride": {
+        target: "http://localhost:8080/backend/v1",
+        changeOrigin: true
       }
     }
   },

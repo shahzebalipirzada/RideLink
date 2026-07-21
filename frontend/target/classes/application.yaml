@@ -1,0 +1,36 @@
+spring:
+
+  application:
+    name: ride-link
+
+  mongodb:
+    host: localhost
+    port: 27017
+    database: ride-link
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23lixi13i3bjhu1ddJ
+            client-secret: 056291c420c27f664682c87e248a536728da8ae0
+
+security:
+  jwt:
+    key: ed01f582a134562a9a29dc463ecac133408bba98f9ed9fd6cf634d0ac38facfd05cdc9f9c18042704bd34ad291371caff3ec033695e88c6437c2c1b0c3da9a05
+    access-token:
+      age: 1200000
+    refresh-token:
+      age: 1728000000
+  oauth:
+    redirect: http://localhost:5173/
+
+osrm:
+  base-url: http://router.project-osrm.org
+  profile: driving
+  route:
+    service: route
+    options:
+      - option: geometries
+        value: polyline6  # polyline6, geojson

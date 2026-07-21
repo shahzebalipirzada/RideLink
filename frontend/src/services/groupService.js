@@ -4,7 +4,7 @@ function toGeoPoint(locationData) {
   return {
     name: locationData.name,
     // type: 'Point',
-    coordinates: [locationData.longitude, locationData.latitude],
+    coordinate: [locationData.longitude, locationData.latitude],
   };
 }
 
@@ -19,5 +19,7 @@ function toApiPayload(groupData) {
 
 export async function createGroup(groupData) {
   const payload = toApiPayload(groupData);
+  alert(JSON.stringify(payload, null, 2));
+   // Debugging: Show the payload
   return sendRequest('/ride/create', payload, 'POST');
 }

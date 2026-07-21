@@ -1,12 +1,10 @@
-let refreshPromise = null; // shared across all callers to dedupe concurrent refreshes
-
 const sendRequest = async (url, data = {}, method = 'GET', isRetry = false) => {
   const options = {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', // sends the httpOnly cookie
+    credentials: 'include',
   };
 
   if (method !== 'GET') {
@@ -17,25 +15,22 @@ const sendRequest = async (url, data = {}, method = 'GET', isRetry = false) => {
 
   if (!response.ok) {
     if (response.status === 401 && !isRetry && url !== '/auth/refresh-token') {
-      // Dedupe: if a refresh is already in flight, wait for that one
       if (!refreshPromise) {
         refreshPromise = sendRequest('/auth/refresh-token', {}, 'POST', true)
           .finally(() => {
-            refreshPromise = null; // reset so future 401s can trigger a new refresh
+            refreshPromise = null;
           });
       }
 
       try {
-        await refreshPromise; // wait for refresh to finish
-        return sendRequest(url, data, method, true); // retry original request once
+        await refreshPromise;
+        return sendRequest(url, data, method, true);
       } catch (refreshError) {
-        // refresh failed -> force login
         window.location.href = '/login';
         throw new Error('Session expired. Redirecting to login.');
       }
     }
 
-    // Non-401 error, or refresh already retried and still failing
     const errorBody = await response.json().catch(() => null);
     const error = new Error(errorBody?.message || `Request failed with status ${response.status}`);
     error.status = response.status;
@@ -43,7 +38,22 @@ const sendRequest = async (url, data = {}, method = 'GET', isRetry = false) => {
     throw error;
   }
 
-  return response.json();
+  // 204 No Content, or any 2xx with an empty body — nothing to parse
+  if (response.status === 204) {
+    return null;
+  }
+
+  const text = await response.text();
+  if (!text) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    // response wasn't valid JSON but request succeeded — don't throw
+    return null;
+  }
 };
 
 export default sendRequest;
