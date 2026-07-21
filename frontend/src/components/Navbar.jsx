@@ -18,6 +18,7 @@ const Navbar = ({ onLogoClick, activeLink }) => (
       <a href="/" className={activeLink === 'home' ? 'active' : ''} onClick={onLogoClick}>Home</a>
       <a href="/messages" className={activeLink === 'messages' ? 'active' : ''}>Messages</a>
       <a href="/groups" className={activeLink === 'groups' ? 'active' : ''}>Groups</a>
+      <a href="/mygroups" className={activeLink === 'mygroups' ? 'active' : ''}>My Groups</a>
     </div>
 
     <div className="nav-actions">
