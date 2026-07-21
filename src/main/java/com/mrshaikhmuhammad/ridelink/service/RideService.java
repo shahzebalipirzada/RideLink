@@ -1,6 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.service;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.RideRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideCreateRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideJoinRequestDto;
+import com.mrshaikhmuhammad.ridelink.dto.request.RideSearchRequestDto;
 import com.mrshaikhmuhammad.ridelink.entity.Ride;
 import com.mrshaikhmuhammad.ridelink.dto.response.RideResponseDto;
 import com.mrshaikhmuhammad.ridelink.entity.User;
@@ -11,12 +13,12 @@ import com.mrshaikhmuhammad.ridelink.security.AuthUtil;
 import com.mrshaikhmuhammad.ridelink.service.scoring.RideScore;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -25,6 +27,7 @@ import java.util.*;
 public class RideService {
 
     private final UserRepository userRepository;
+    private final RideRepository rideRepository;
     private final OsrmRouteClient osrmClient;
     private final MongoTemplate mongoTemplate;
     private final RideScore similarityScorer;
@@ -32,21 +35,40 @@ public class RideService {
 
     private final int MAX_WAIT_SECONDS = 2*60*60;
 
-    public void createRide(RideRequestDto dto){
+    @Transactional
+    public void createRide(RideCreateRequestDto dto){
         User user = authUtil.getAuthenticatedUser();
         Ride ride = new Ride(
             dto,
             osrmClient.getRoute(List.of(dto.origin(), dto.destination()))
         );
-
-        if(user.getCreatedRides() == null){
-            user.setCreatedRides(new ArrayList<>());
-        }
-        user.getCreatedRides().add(ride);
-        userRepository.save(user);
+        ride.setCreator(user);
+        rideRepository.save(ride);
     }
 
-    public RideResponseDto searchRides(RideRequestDto dto, int radius){
+    @Transactional
+    public void joinRide(RideJoinRequestDto dto){
+        User user = authUtil.getAuthenticatedUser();
+
+        Ride ride = rideRepository.findById(dto.id())
+            .orElseThrow(() -> new IllegalArgumentException(
+                    "Ride Not Found: no ride found with this id " + dto.id().toString()
+                )
+            );
+
+        if(ride.getJoiners() == null){
+            ride.setJoiners(new HashSet<>());
+        }
+        if (!ride.getCreator().equals(user)) {
+            ride.getJoiners().add(user);
+        }
+        else{
+            throw new IllegalArgumentException("Owner can not Join as Passenger: ride owner is trying to join his own ride");
+        }
+        rideRepository.save(ride);
+    }
+
+    public RideResponseDto searchRides(RideSearchRequestDto dto, int radius){
         Ride ride = new Ride(
             dto,
             osrmClient.getRoute(List.of(dto.origin(), dto.destination()))
