@@ -5,6 +5,8 @@ import { FiSearch, FiMapPin, FiClock, FiCalendar, FiUsers, FiUserPlus } from 're
 import { useMap } from '../hooks/useMap';
 import Navbar from '../components/Navbar';
 import '../styles/Groups.css';
+import AddGroupComponent from '../components/AddGroupComponent';
+import { useCreateGroupModal } from '../hooks/useCreateGroupModal';
 
 const Groups = () => {
   const navigate = useNavigate();
@@ -20,6 +22,34 @@ const Groups = () => {
   });
 
   // Mock Group Documents (Matches what you would store in Supabase/MongoDB)
+  const userGroups = [ 
+    {
+      id: 'g1',
+      name: 'Morning IBA Commuters',
+      from: 'City Center, Sukkur',
+      to: 'IBA University Campus',
+      date: 'July 16, 2026',
+      time: '08:00 AM',
+      members: 3,
+      capacity: 4,
+      creator: 'Shahrukh'
+    },
+    {
+      id: 'g2',
+      name: 'Weekend Karachi Trip',
+      from: 'Sukkur IBA',
+      to: 'Clifton, Karachi',
+      date: 'July 18, 2026',
+      time: '06:00 AM',
+      members: 2,
+      capacity: 4,
+      creator: 'Muhammad Khizar'
+    }
+  ];  
+    
+
+
+
   const mockGroups = [
     {
       id: 'g1',
@@ -79,7 +109,13 @@ const Groups = () => {
     // Add Supabase DB update logic here
   };
 
+   const { isOpen, openModal, closeModal, handleSubmit } = useCreateGroupModal();
+
+
   return (
+    <>
+    <AddGroupComponent isOpen={isOpen} onClose={closeModal} onSubmit={handleSubmit} />
+
     <div className="groups-wrapper">
       {/* Background Layer */}
       <div ref={mapContainer} className="map-container" />
@@ -104,11 +140,20 @@ const Groups = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+             
             </div>
+             <button className="create-group-btn" onClick={openModal}>
+                + Create New Group
+              </button>
+            
+
+          
           </div>
+         
 
           {/* Groups Grid */}
           <div className="groups-grid">
+            
             {filteredGroups.length > 0 ? (
               filteredGroups.map(group => (
                 <div key={group.id} className="group-card glass-panel">
@@ -166,7 +211,9 @@ const Groups = () => {
         </main>
       </div>
     </div>
+    </>
   );
+
 };
 
 export default Groups;
