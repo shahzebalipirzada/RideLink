@@ -22,13 +22,13 @@ public class Ride {
     @Id
     ObjectId id;
 
-    @Transient
-    Role role; //driver passenger
     Location origin;
     Location destination;
 
     @DBRef
     User creator;
+    Role creatorRole;
+
     @DBRef
     Set<User> joiners = new HashSet<>();
 
@@ -45,7 +45,7 @@ public class Ride {
     }
 
     public Ride(RideSearchRequestDto ride, LocationResponseDto path){
-        this.role = Role.valueOf(ride.role());
+        this.creatorRole = Role.valueOf(ride.role());
         this.origin = new Location(ride.origin());
         this.destination = new Location(ride.destination());
         this.departureTime = ride.departureTime();
