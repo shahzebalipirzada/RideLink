@@ -1,20 +1,15 @@
 package com.mrshaikhmuhammad.ridelink.error;
 
-import lombok.Data;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.time.LocalDateTime;
+import lombok.*;
+import org.springframework.http.*;
+import java.time.*;
 
 @Data
 public class ApiError {
+
     private LocalDateTime time;
     private HttpStatus status;
     private String message;
-
-    ApiError(){
-        time = LocalDateTime.now();
-    }
 
     ApiError(String message, HttpStatus status){
         this.message = message;
