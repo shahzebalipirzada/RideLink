@@ -25,10 +25,8 @@ const ResultsPanel = ({ options, isLoading, error, onGroupCreated}) => {
     console.log("sending id: ",id)
     sendRequest(`/ride/join`, {id},'POST')
       .then(response => {
-        if (response.ok) {
+        if (response?.ok) {
           alert('Successfully joined the group!');
-        } else {
-          alert('Failed to join the group. Please try again.');
         }
       })
       .catch(error => {

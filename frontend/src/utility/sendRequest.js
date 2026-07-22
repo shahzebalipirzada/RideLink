@@ -1,3 +1,4 @@
+let refreshPromise = null;
 const sendRequest = async (url, data = {}, method = 'GET', isRetry = false) => {
   const options = {
     method,
