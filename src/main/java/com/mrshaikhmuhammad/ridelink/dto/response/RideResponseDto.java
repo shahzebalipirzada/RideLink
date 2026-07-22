@@ -12,14 +12,14 @@ public record RideResponseDto(
 ) {
 
     public record RideSuggestion(
-            ObjectId id,
+            String id,
             String origin,
             String destination,
             String departureTime
     ) {
         public RideSuggestion(Ride ride) {
             this(
-                    ride.getId(),
+                    ride.getId().toString(),
                     ride.getOrigin().getName(),
                     ride.getDestination().getName(),
                     DateTimeFormatter.ofPattern("MMMM d 'at' h:mm a")

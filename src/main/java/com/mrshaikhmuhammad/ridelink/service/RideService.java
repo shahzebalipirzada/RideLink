@@ -13,6 +13,7 @@ import com.mrshaikhmuhammad.ridelink.security.AuthUtil;
 import com.mrshaikhmuhammad.ridelink.service.scoring.RideScore;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.geo.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -50,7 +51,7 @@ public class RideService {
     public void joinRide(RideJoinRequestDto dto){
         User user = authUtil.getAuthenticatedUser();
 
-        Ride ride = rideRepository.findById(dto.id())
+        Ride ride = rideRepository.findById(new ObjectId(dto.id()))
             .orElseThrow(() -> new IllegalArgumentException(
                     "Ride Not Found: no ride found with this id " + dto.id().toString()
                 )
