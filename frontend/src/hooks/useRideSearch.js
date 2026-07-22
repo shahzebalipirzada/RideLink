@@ -24,12 +24,12 @@ export function useRideSearch() {
     origin: {
       name: sourceData?.name,
       type: "Point",
-      coordinates: [sourceData?.longitude, sourceData?.latitude],
+      coordinate: [sourceData?.longitude, sourceData?.latitude],
     },
     destination: {
       name: destinationData?.name,
       type: "Point",
-      coordinates: [destinationData?.longitude, destinationData?.latitude],
+      coordinate: [destinationData?.longitude, destinationData?.latitude],
     },
     "departureTime": new Date(`${date}T${time}Z`).toISOString(),
   });
