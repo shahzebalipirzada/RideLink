@@ -57,7 +57,7 @@ export function useRideSearch() {
       const payload = buildPayload();
       alert(JSON.stringify(payload, null, 2)); // Debugging: Show the payload
       const results = await searchRideGroups(payload, radius);
-      setOptions(results);
+      setOptions(results.rideSuggestion|| []);
     } catch (err) {
       console.error("Error searching groups:", err);
       setError("Failed to load groups. Please try again.");

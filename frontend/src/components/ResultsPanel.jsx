@@ -5,6 +5,7 @@ import RouteCard from './RouteCard';
 import {useState} from 'react';
 import AddGroupComponent from './AddGroupComponent';
 import { useCreateGroupModal } from '../hooks/useCreateGroupModal';
+import sendRequest from '../utility/sendRequest';
 
 /**
  * ResultsPanel
@@ -18,6 +19,22 @@ import { useCreateGroupModal } from '../hooks/useCreateGroupModal';
 
 const ResultsPanel = ({ options, isLoading, error, onGroupCreated}) => {
   const { isOpen, openModal, closeModal, handleSubmit } = useCreateGroupModal({ onGroupCreated });
+  
+
+  const handleJoin = (groupId) => {
+    sendRequest(`/ride/join`, {groupId},'POST')
+      .then(response => {
+        if (response.ok) {
+          alert('Successfully joined the group!');
+        } else {
+          alert('Failed to join the group. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error joining group:', error);
+        console.error('An error occurred while trying to join the group.');
+      });
+  }
 
   return (
 <>
@@ -63,7 +80,7 @@ const ResultsPanel = ({ options, isLoading, error, onGroupCreated}) => {
           source={option.origin}
           destination={option.destination}
           dateTime={option.departureTime}
-          onJoin={() => console.log(`Joining ${option.origin} → ${option.destination} group`)}
+          onJoin={()=> handleJoin(option.id)}
         />
       ))}
     </div>
