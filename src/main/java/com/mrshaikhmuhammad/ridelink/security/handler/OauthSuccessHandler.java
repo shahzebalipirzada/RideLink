@@ -29,7 +29,7 @@ public class OauthSuccessHandler implements AuthenticationSuccessHandler {
     private final UserRepository userRepository;
     private final AuthService authService;
 
-    @Value("${security.oauth.redirect}")
+    @Value("${security.oauth.redirect.homepage}")
     private String redirectUrl;
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
