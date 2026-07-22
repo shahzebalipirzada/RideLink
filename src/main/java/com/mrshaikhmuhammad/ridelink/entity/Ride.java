@@ -7,7 +7,6 @@ import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.*;
 
 import java.time.Instant;
@@ -38,6 +37,7 @@ public class Ride {
     Path path;
 
     public Ride(RideCreateRequestDto ride, LocationResponseDto path){
+        this.creatorRole = Role.valueOf(ride.role());
         this.origin = new Location(ride.origin());
         this.destination = new Location(ride.destination());
         this.departureTime = ride.departureTime();
