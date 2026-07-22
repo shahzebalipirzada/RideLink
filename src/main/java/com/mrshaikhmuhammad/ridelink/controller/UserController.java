@@ -1,19 +1,22 @@
 package com.mrshaikhmuhammad.ridelink.controller;
 
-import com.mrshaikhmuhammad.ridelink.dto.response.UserResponseDto;
-import com.mrshaikhmuhammad.ridelink.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.*;
+import com.mrshaikhmuhammad.ridelink.service.*;
+import com.mrshaikhmuhammad.ridelink.dto.response.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    UserService userService;
+
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<UserResponseDto> getUserDetails(){
-        return new ResponseEntity<>(userService.getUser(), HttpStatus.OK);
+        UserResponseDto response = userService.getUser();
+         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

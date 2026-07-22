@@ -26,7 +26,7 @@ public class RideScore {
     public double score(Ride requestingRide, Ride candidate) {
 
         Ride driver, passenger;
-        if(requestingRide.getRole() == Role.PASSENGER){
+        if(requestingRide.getCreatorRole() == Role.PASSENGER){
             driver = candidate;
             passenger = requestingRide;
         }

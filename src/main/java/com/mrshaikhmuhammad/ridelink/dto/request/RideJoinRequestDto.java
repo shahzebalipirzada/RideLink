@@ -1,6 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.dto.request;
 
-import org.bson.types.ObjectId;
+import org.bson.types.*;
 
-public record RideJoinRequestDto(ObjectId id) {
-}
+public record RideJoinRequestDto(
+    ObjectId id
+) {}

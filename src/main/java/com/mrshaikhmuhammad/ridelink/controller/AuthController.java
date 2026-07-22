@@ -1,10 +1,9 @@
 package com.mrshaikhmuhammad.ridelink.controller;
 
+import lombok.*;
 import com.mrshaikhmuhammad.ridelink.dto.request.*;
 import com.mrshaikhmuhammad.ridelink.dto.response.*;
 import com.mrshaikhmuhammad.ridelink.security.*;
-
-import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,19 +32,19 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(){
-        LogoutResponseDto dto = authService.logout();
+        LogoutResponseDto response = authService.logout();
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, dto.accessTokenCookie().toString())
-                .header(HttpHeaders.SET_COOKIE, dto.refreshTokenCookie().toString())
+                .header(HttpHeaders.SET_COOKIE, response.accessTokenCookie().toString())
+                .header(HttpHeaders.SET_COOKIE, response.refreshTokenCookie().toString())
                 .build();
     }
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken( @CookieValue(name = "refresh-token") String token){
-        RefreshTokenResponseDto dto = authService.refreshToken(token);
+        RefreshTokenResponseDto response = authService.refreshToken(token);
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, dto.accessTokenCookie().toString())
-                .header(HttpHeaders.SET_COOKIE, dto.refreshTokenCookie().toString())
+                .header(HttpHeaders.SET_COOKIE, response.accessTokenCookie().toString())
+                .header(HttpHeaders.SET_COOKIE, response.refreshTokenCookie().toString())
                 .build();
     }
 }

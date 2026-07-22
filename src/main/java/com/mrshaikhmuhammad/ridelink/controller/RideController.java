@@ -1,29 +1,29 @@
 package com.mrshaikhmuhammad.ridelink.controller;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.RideCreateRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.request.RideJoinRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.request.RideSearchRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.response.RideResponseDto;
-import com.mrshaikhmuhammad.ridelink.service.RideService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.*;
+import com.mrshaikhmuhammad.ridelink.service.*;
+import com.mrshaikhmuhammad.ridelink.dto.request.*;
+import com.mrshaikhmuhammad.ridelink.dto.response.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.*;
+
 
 @RestController
 @RequestMapping("/ride")
+@RequiredArgsConstructor
 public class RideController {
 
-    @Autowired
-    RideService rideService;
+    private final RideService rideService;
 
     @PostMapping("create")
-    public ResponseEntity<?> createRides(@RequestBody RideCreateRequestDto ride){
+    public ResponseEntity<Void> createRides(@RequestBody RideCreateRequestDto ride){
         rideService.createRide(ride);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("join")
-    public ResponseEntity<?> joinRides(@RequestBody RideJoinRequestDto ride){
+    public ResponseEntity<Void> joinRides(@RequestBody RideJoinRequestDto ride){
         rideService.joinRide(ride);
         return new ResponseEntity<>(HttpStatus.OK);
     }

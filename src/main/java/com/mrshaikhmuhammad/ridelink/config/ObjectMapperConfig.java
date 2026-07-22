@@ -1,8 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.*;
+import com.fasterxml.jackson.databind.*;
 
 @Configuration
 public class ObjectMapperConfig {
