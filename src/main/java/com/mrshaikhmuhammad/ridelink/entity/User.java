@@ -1,25 +1,20 @@
 package com.mrshaikhmuhammad.ridelink.entity;
 
+import com.mrshaikhmuhammad.ridelink.entity.type.*;
 
-import com.mrshaikhmuhammad.ridelink.entity.type.OauthProviderType;
-import com.mrshaikhmuhammad.ridelink.entity.type.Role;
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.bson.types.*;
+import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.index.*;
+import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.userdetails.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Document("user")
 public class User implements UserDetails {
@@ -28,6 +23,7 @@ public class User implements UserDetails {
     private ObjectId id;
 
     private String name;
+
     @NonNull
     @Indexed
     private String username;

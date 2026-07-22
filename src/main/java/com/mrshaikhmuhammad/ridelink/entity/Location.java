@@ -1,19 +1,15 @@
 package com.mrshaikhmuhammad.ridelink.entity;
 
 import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import lombok.*;
+import org.springframework.data.mongodb.core.geo.*;
+import org.springframework.data.mongodb.core.index.*;
 
 @Data
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Location{
+
     private String name;
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)

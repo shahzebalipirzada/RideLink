@@ -1,23 +1,23 @@
 package com.mrshaikhmuhammad.ridelink.entity;
 
-import com.mrshaikhmuhammad.ridelink.dto.request.RideCreateRequestDto;
-import com.mrshaikhmuhammad.ridelink.dto.request.RideSearchRequestDto;
-import com.mrshaikhmuhammad.ridelink.entity.type.Role;
-import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.dto.request.*;
+import com.mrshaikhmuhammad.ridelink.entity.type.*;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.*;
+
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+import org.bson.types.*;
+import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.*;
 
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.*;
+import java.util.*;
 
 @Data
 @Document("ride")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ride {
+
     @Id
     ObjectId id;
 

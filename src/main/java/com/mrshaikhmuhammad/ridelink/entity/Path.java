@@ -1,8 +1,7 @@
 package com.mrshaikhmuhammad.ridelink.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
-
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.*;
 import java.util.*;
 
 public record Path(
@@ -13,22 +12,25 @@ public record Path(
 
     public Path(LocationResponseDto dto) {
         this(
-                dto.code(),
-                dto.routes().stream()
-                        .map(r -> new Route(
-                                r.distance(),
-                                r.duration(),
-                                r.weight(),
-                                r.legs().stream()
-                                        .map(l -> new Leg(l.duration(), l.distance(), l.weight()))
-                                        .toList(),
-                                r.weightName(),
-                                r.geometry()
-                        ))
+            dto.code(),
+
+            dto.routes().stream()
+                .map(r -> new Route(
+                    r.distance(),
+                    r.duration(),
+                    r.weight(),
+                    r.legs().stream()
+                        .map(l -> new Leg(l.duration(), l.distance(), l.weight()))
                         .toList(),
-                dto.waypoints().stream()
-                        .map(w -> new Waypoint(w.hint(), w.location(), w.name(), w.distance()))
-                        .toList()
+                    r.weightName(),
+                    r.geometry()
+                    )
+                )
+                .toList(),
+
+            dto.waypoints().stream()
+                .map(w -> new Waypoint(w.hint(), w.location(), w.name(), w.distance()))
+                .toList()
         );
     }
 
