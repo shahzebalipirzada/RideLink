@@ -1,6 +1,6 @@
 package com.mrshaikhmuhammad.ridelink.external.osrm.dto;
 
-import com.mrshaikhmuhammad.ridelink.entity.Location;
+import com.mrshaikhmuhammad.ridelink.entity.*;
 
 public record LocationRequestDto(String name, double[] coordinate) {
 

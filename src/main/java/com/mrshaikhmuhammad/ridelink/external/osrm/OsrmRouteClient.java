@@ -1,15 +1,14 @@
 package com.mrshaikhmuhammad.ridelink.external.osrm;
 
-import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationRequestDto;
-import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationResponseDto;
+import com.mrshaikhmuhammad.ridelink.external.osrm.dto.*;
 
 import lombok.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.client.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 @Component
 @RequiredArgsConstructor
@@ -40,4 +39,3 @@ public class OsrmRouteClient {
         return response.getBody();
     }
 }
-
