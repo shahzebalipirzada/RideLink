@@ -1,15 +1,14 @@
 package com.mrshaikhmuhammad.ridelink.dto.response;
 
-import com.mrshaikhmuhammad.ridelink.entity.Ride;
-
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
+import com.mrshaikhmuhammad.ridelink.entity.*;
+import java.util.*;
+import java.time.*;
+import java.time.format.*;
 
 public record RideResponseDto(
         List<RideSuggestion> rideSuggestion
 ) {
+
     public record RideSuggestion(
             String id,
             String origin,
@@ -20,13 +19,12 @@ public record RideResponseDto(
             this(
                     ride.getId().toString(),
                     ride.getOrigin().getName(),
-
                     ride.getDestination().getName(),
-
                     DateTimeFormatter.ofPattern("MMMM d 'at' h:mm a")
                             .withZone(ZoneOffset.UTC)
                             .format(ride.getDepartureTime())
             );
         }
     }
+
 }

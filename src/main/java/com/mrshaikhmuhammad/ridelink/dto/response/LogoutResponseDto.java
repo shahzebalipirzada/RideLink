@@ -1,7 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.dto.response;
 
-import org.apache.coyote.Response;
-import org.springframework.http.ResponseCookie;
+import org.springframework.http.*;
 
-public record LogoutResponseDto(ResponseCookie accessTokenCookie, ResponseCookie refreshTokenCookie) {
-}
+public record LogoutResponseDto(
+        ResponseCookie accessTokenCookie,
+        ResponseCookie refreshTokenCookie
+) {}
