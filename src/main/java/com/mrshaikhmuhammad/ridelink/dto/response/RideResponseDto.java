@@ -1,6 +1,8 @@
 package com.mrshaikhmuhammad.ridelink.dto.response;
 
 import com.mrshaikhmuhammad.ridelink.entity.*;
+import org.bson.types.*;
+
 import java.util.*;
 import java.time.*;
 import java.time.format.*;
@@ -10,14 +12,14 @@ public record RideResponseDto(
 ) {
 
     public record RideSuggestion(
-            String id,
+            ObjectId id,
             String origin,
             String destination,
             String departureTime
     ) {
         public RideSuggestion(Ride ride) {
             this(
-                    ride.getId().toString(),
+                    ride.getId(),
                     ride.getOrigin().getName(),
                     ride.getDestination().getName(),
                     DateTimeFormatter.ofPattern("MMMM d 'at' h:mm a")
