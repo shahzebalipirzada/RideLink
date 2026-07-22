@@ -21,8 +21,9 @@ const ResultsPanel = ({ options, isLoading, error, onGroupCreated}) => {
   const { isOpen, openModal, closeModal, handleSubmit } = useCreateGroupModal({ onGroupCreated });
   
 
-  const handleJoin = (groupId) => {
-    sendRequest(`/ride/join`, {groupId},'POST')
+  const handleJoin = (id) => {
+    console.log("sending id: ",id)
+    sendRequest(`/ride/join`, {id},'POST')
       .then(response => {
         if (response.ok) {
           alert('Successfully joined the group!');
