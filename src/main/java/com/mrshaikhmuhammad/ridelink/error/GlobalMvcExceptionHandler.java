@@ -10,7 +10,7 @@ import org.springframework.security.core.*;
 import org.springframework.security.access.*;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalMvcExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ApiError> usernameNotFoundExceptionHandler(UsernameNotFoundException ex){
