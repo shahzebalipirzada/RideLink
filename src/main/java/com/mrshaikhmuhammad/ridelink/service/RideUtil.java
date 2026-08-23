@@ -1,4 +1,4 @@
-package com.mrshaikhmuhammad.ridelink.service.scoring;
+package com.mrshaikhmuhammad.ridelink.service;
 
 import com.mrshaikhmuhammad.ridelink.external.osrm.dto.LocationRequestDto;
 import com.mrshaikhmuhammad.ridelink.entity.Ride;
@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Component
-public class RideScore {
+public class RideUtil {
 
     @Autowired
     OsrmRouteClient routeClient;

@@ -34,6 +34,9 @@ public class Ride {
     @Field("departure_time")
     Instant departureTime;
 
+    @DBRef
+    Conversation conversation;
+
     Path path;
 
     public Ride(RideCreateRequestDto ride, LocationResponseDto path){

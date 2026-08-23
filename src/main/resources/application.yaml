@@ -42,6 +42,8 @@ security:
     redirect:
       homepage: http://localhost:5173/
       login: http://localhost:5173/login
+  cors:
+    allowed-origins: "http://localhost:5173"
 
 osrm:
   base-url: http://router.project-osrm.org
@@ -52,5 +54,10 @@ osrm:
       - option: geometries
         value: polyline6  # polyline6, geojson
 
+websocket:
+    transport-limit:
+      message-size: 262144   # 256 KB
+      buffer-size: 1048576   # 1 MB
+      send-time: 20000       # 20 seconds
 
 debug: true

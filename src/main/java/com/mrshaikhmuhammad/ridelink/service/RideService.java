@@ -10,7 +10,6 @@ import com.mrshaikhmuhammad.ridelink.external.osrm.OsrmRouteClient;
 import com.mrshaikhmuhammad.ridelink.repository.RideRepository;
 import com.mrshaikhmuhammad.ridelink.repository.UserRepository;
 import com.mrshaikhmuhammad.ridelink.security.AuthUtil;
-import com.mrshaikhmuhammad.ridelink.service.scoring.RideScore;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -31,7 +30,7 @@ public class RideService {
     private final RideRepository rideRepository;
     private final OsrmRouteClient osrmClient;
     private final MongoTemplate mongoTemplate;
-    private final RideScore similarityScorer;
+    private final RideUtil similarityScorer;
     private final AuthUtil authUtil;
 
     private final int MAX_WAIT_SECONDS = 2*60*60;

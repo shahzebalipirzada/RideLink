@@ -1,0 +1,404 @@
+{
+  ".codex/hooks.json": {
+    "mtime": 1787477078.4002712,
+    "seen": 1787477112.9060764,
+    "ast_hash": "4b318a470fb6780b3746b62a977d6c0e",
+    "semantic_hash": "4b318a470fb6780b3746b62a977d6c0e"
+  },
+  "mvnw": {
+    "mtime": 1781617539.50205,
+    "seen": 1787477112.9060826,
+    "ast_hash": "ab50dd89da7da2346b28003352eeeeeb",
+    "semantic_hash": "ab50dd89da7da2346b28003352eeeeeb"
+  },
+  "pom.xml": {
+    "mtime": 1785241680.723,
+    "seen": 1787477112.9060857,
+    "ast_hash": "344261be0d1cf66730204f658de51a98",
+    "semantic_hash": "344261be0d1cf66730204f658de51a98"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/RideLinkApplication.java": {
+    "mtime": 1782307165.8266175,
+    "seen": 1787477112.9060886,
+    "ast_hash": "aa1290dad518f7b03b252c017db003bd",
+    "semantic_hash": "aa1290dad518f7b03b252c017db003bd"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/config/ObjectMapperConfig.java": {
+    "mtime": 1784709846.833,
+    "seen": 1787477112.9060917,
+    "ast_hash": "0403be8311d9a935051098d93d83b5fe",
+    "semantic_hash": "0403be8311d9a935051098d93d83b5fe"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/config/RestTemplateConfig.java": {
+    "mtime": 1784709846.799,
+    "seen": 1787477112.9060946,
+    "ast_hash": "19f06e3dee75a6cf6ea5bb95856291e3",
+    "semantic_hash": "19f06e3dee75a6cf6ea5bb95856291e3"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/config/TransactionConfig.java": {
+    "mtime": 1786427535.168,
+    "seen": 1787477112.906098,
+    "ast_hash": "a2efb9733d3222d82c53d72c0792866f",
+    "semantic_hash": "a2efb9733d3222d82c53d72c0792866f"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/controller/AuthController.java": {
+    "mtime": 1784721558.418,
+    "seen": 1787477112.9061007,
+    "ast_hash": "ddc8064d1f17656c43a8c749b77e0db1",
+    "semantic_hash": "ddc8064d1f17656c43a8c749b77e0db1"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/controller/MessageController.java": {
+    "mtime": 1785871024.081,
+    "seen": 1787477112.9061036,
+    "ast_hash": "9ef2718ab9dd973f194289eb85858e86",
+    "semantic_hash": "9ef2718ab9dd973f194289eb85858e86"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/controller/RideController.java": {
+    "mtime": 1784710341.529,
+    "seen": 1787477112.9061065,
+    "ast_hash": "0f79eadbace4a529cbe0f03deceab7e8",
+    "semantic_hash": "0f79eadbace4a529cbe0f03deceab7e8"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/controller/UserController.java": {
+    "mtime": 1784710341.543,
+    "seen": 1787477112.9061093,
+    "ast_hash": "0c7ce351120ddedd7b6423f26a2484e8",
+    "semantic_hash": "0c7ce351120ddedd7b6423f26a2484e8"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/LoginRequestDto.java": {
+    "mtime": 1784710341.536,
+    "seen": 1787477112.9061124,
+    "ast_hash": "273b5c414bac7f375b6170954f8ad5a8",
+    "semantic_hash": "273b5c414bac7f375b6170954f8ad5a8"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/MessageRequestDto.java": {
+    "mtime": 1785943580.044,
+    "seen": 1787477112.9061158,
+    "ast_hash": "7f1e4b4b8d687b2006aa8f916b449656",
+    "semantic_hash": "7f1e4b4b8d687b2006aa8f916b449656"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/RideCreateRequestDto.java": {
+    "mtime": 1784711203.026,
+    "seen": 1787477112.9061186,
+    "ast_hash": "5f639906bf2557a3acbd9c171d85f811",
+    "semantic_hash": "5f639906bf2557a3acbd9c171d85f811"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/RideJoinRequestDto.java": {
+    "mtime": 1784714871.424,
+    "seen": 1787477112.9061217,
+    "ast_hash": "4b0e239397fe61c1e3cccdfeb8a0b419",
+    "semantic_hash": "4b0e239397fe61c1e3cccdfeb8a0b419"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/RideSearchRequestDto.java": {
+    "mtime": 1784710341.467,
+    "seen": 1787477112.9061248,
+    "ast_hash": "4ef8863ab87290ec7bd87eb4a7b011b0",
+    "semantic_hash": "4ef8863ab87290ec7bd87eb4a7b011b0"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/request/SignupRequestDto.java": {
+    "mtime": 1784710341.511,
+    "seen": 1787477112.9061282,
+    "ast_hash": "b366cef8f3dff9e2837933c1097b0793",
+    "semantic_hash": "b366cef8f3dff9e2837933c1097b0793"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/LoginResponseDto.java": {
+    "mtime": 1784711516.656,
+    "seen": 1787477112.906131,
+    "ast_hash": "2ad5ab333e15e9eee6eb5489c2802807",
+    "semantic_hash": "2ad5ab333e15e9eee6eb5489c2802807"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/LogoutResponseDto.java": {
+    "mtime": 1784712064.98,
+    "seen": 1787477112.9061341,
+    "ast_hash": "f4d6abcc438ab94c5fdae7176489343c",
+    "semantic_hash": "f4d6abcc438ab94c5fdae7176489343c"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/MessageResponseDto.java": {
+    "mtime": 1785871039.162,
+    "seen": 1787477112.906137,
+    "ast_hash": "76b4cccad8aac20081558f3cfe49f83b",
+    "semantic_hash": "76b4cccad8aac20081558f3cfe49f83b"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/RefreshTokenResponseDto.java": {
+    "mtime": 1784712064.991,
+    "seen": 1787477112.9061399,
+    "ast_hash": "f32287c944af286e43ce3aea29695f40",
+    "semantic_hash": "f32287c944af286e43ce3aea29695f40"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/RideResponseDto.java": {
+    "mtime": 1784714871.454,
+    "seen": 1787477112.9061615,
+    "ast_hash": "867fd72664dc92d7c3e8528613b6df7f",
+    "semantic_hash": "867fd72664dc92d7c3e8528613b6df7f"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/SignupResponseDto.java": {
+    "mtime": 1784712064.974,
+    "seen": 1787477112.9061663,
+    "ast_hash": "e6efaed2007cf91d5b814128a9107718",
+    "semantic_hash": "e6efaed2007cf91d5b814128a9107718"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/dto/response/UserResponseDto.java": {
+    "mtime": 1784712064.967,
+    "seen": 1787477112.9061685,
+    "ast_hash": "5881d2afff25eb07f50c2a265e186649",
+    "semantic_hash": "5881d2afff25eb07f50c2a265e186649"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/Conversation.java": {
+    "mtime": 1786361162.53,
+    "seen": 1787477112.906171,
+    "ast_hash": "2b8be1bc704dc887dcf1feb59923ae4c",
+    "semantic_hash": "2b8be1bc704dc887dcf1feb59923ae4c"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/Location.java": {
+    "mtime": 1784712886.556,
+    "seen": 1787477112.9061735,
+    "ast_hash": "40d5bc11453f41e18dcb716b5428a77d",
+    "semantic_hash": "40d5bc11453f41e18dcb716b5428a77d"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/Message.java": {
+    "mtime": 1785842204.122,
+    "seen": 1787477112.906176,
+    "ast_hash": "79ad2e1b5a5a240741b4cb9ac33de55a",
+    "semantic_hash": "79ad2e1b5a5a240741b4cb9ac33de55a"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/MessagePreview.java": {
+    "mtime": 1785869031.194,
+    "seen": 1787477112.9061782,
+    "ast_hash": "268d4090afef5623432e98add501f395",
+    "semantic_hash": "268d4090afef5623432e98add501f395"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/Path.java": {
+    "mtime": 1784712886.456,
+    "seen": 1787477112.9061809,
+    "ast_hash": "5138fcf86e966258ccfe262e3fa26947",
+    "semantic_hash": "5138fcf86e966258ccfe262e3fa26947"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/Ride.java": {
+    "mtime": 1785787039.305,
+    "seen": 1787477112.9061835,
+    "ast_hash": "e450d1d42ab5664d09588e6144eaf5a6",
+    "semantic_hash": "e450d1d42ab5664d09588e6144eaf5a6"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/User.java": {
+    "mtime": 1784713055.948,
+    "seen": 1787477112.9061856,
+    "ast_hash": "064c9c038213e3983a4e04c89a33e511",
+    "semantic_hash": "064c9c038213e3983a4e04c89a33e511"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/type/ConversationType.java": {
+    "mtime": 1785762928.493,
+    "seen": 1787477112.9061882,
+    "ast_hash": "f33fdbf3067f7c05d35330b8d9a47ac5",
+    "semantic_hash": "f33fdbf3067f7c05d35330b8d9a47ac5"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/type/OauthProviderType.java": {
+    "mtime": 1784712064.945,
+    "seen": 1787477112.9061906,
+    "ast_hash": "88f984cb0c4ff498f3abf8d08d647b9f",
+    "semantic_hash": "88f984cb0c4ff498f3abf8d08d647b9f"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/entity/type/Role.java": {
+    "mtime": 1784712064.911,
+    "seen": 1787477112.9061952,
+    "ast_hash": "62642cea340baee8ae94145e650f8a80",
+    "semantic_hash": "62642cea340baee8ae94145e650f8a80"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/error/ApiError.java": {
+    "mtime": 1785763700.809,
+    "seen": 1787477112.9062054,
+    "ast_hash": "9365c2a7fc89bb1c7f7cfb66e8c3214b",
+    "semantic_hash": "9365c2a7fc89bb1c7f7cfb66e8c3214b"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/error/GlobalMvcExceptionHandler.java": {
+    "mtime": 1785501468.129,
+    "seen": 1787477112.9062154,
+    "ast_hash": "e43b7a1c2c747df71b33141f91624807",
+    "semantic_hash": "e43b7a1c2c747df71b33141f91624807"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/error/InvalidRefreshTokenException.java": {
+    "mtime": 1784295937.38,
+    "seen": 1787477112.906222,
+    "ast_hash": "c0641f9c4e59d1abc506daf61a52a4ec",
+    "semantic_hash": "c0641f9c4e59d1abc506daf61a52a4ec"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/external/osrm/OsrmProperties.java": {
+    "mtime": 1784714467.615,
+    "seen": 1787477112.9062304,
+    "ast_hash": "b1ddd820a3c6a4630e5e3f8c1358e578",
+    "semantic_hash": "b1ddd820a3c6a4630e5e3f8c1358e578"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/external/osrm/OsrmRouteClient.java": {
+    "mtime": 1784714467.604,
+    "seen": 1787477112.9062371,
+    "ast_hash": "6e7c32d46f8bd1799b2e590ab51dd84a",
+    "semantic_hash": "6e7c32d46f8bd1799b2e590ab51dd84a"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/external/osrm/dto/LocationRequestDto.java": {
+    "mtime": 1784714467.636,
+    "seen": 1787477112.9062397,
+    "ast_hash": "cdb07b4ace201c1cce5f45eff4843908",
+    "semantic_hash": "cdb07b4ace201c1cce5f45eff4843908"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/external/osrm/dto/LocationResponseDto.java": {
+    "mtime": 1784558260.588,
+    "seen": 1787477112.9062424,
+    "ast_hash": "5c467ff0512fbe7403c0c07d15de1236",
+    "semantic_hash": "5c467ff0512fbe7403c0c07d15de1236"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/repository/ConversationRepository.java": {
+    "mtime": 1786361162.558,
+    "seen": 1787477112.9062448,
+    "ast_hash": "50db4caaa1362d364e8c47a2c8055f9e",
+    "semantic_hash": "50db4caaa1362d364e8c47a2c8055f9e"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/repository/MessageRepository.java": {
+    "mtime": 1785842204.078,
+    "seen": 1787477112.9062474,
+    "ast_hash": "68bbddab9cfb7c9dc6ec75155e1d516f",
+    "semantic_hash": "68bbddab9cfb7c9dc6ec75155e1d516f"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/repository/RideRepository.java": {
+    "mtime": 1784714603.762,
+    "seen": 1787477112.9062512,
+    "ast_hash": "a4273b3bf80973a5d72850b9777b90c5",
+    "semantic_hash": "a4273b3bf80973a5d72850b9777b90c5"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/repository/UserRepository.java": {
+    "mtime": 1784714603.798,
+    "seen": 1787477112.906255,
+    "ast_hash": "64eed61ce79ea453c1151fe6bc326b98",
+    "semantic_hash": "64eed61ce79ea453c1151fe6bc326b98"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/AuthService.java": {
+    "mtime": 1784317346.154,
+    "seen": 1787477112.9062574,
+    "ast_hash": "2ff15b7b937334e254474c998dbf74d8",
+    "semantic_hash": "2ff15b7b937334e254474c998dbf74d8"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/AuthUtil.java": {
+    "mtime": 1785940269.848,
+    "seen": 1787477112.9062598,
+    "ast_hash": "e660de39f0fd0cfd4a7cb3572b83f237",
+    "semantic_hash": "e660de39f0fd0cfd4a7cb3572b83f237"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/JwtAuthFilter.java": {
+    "mtime": 1784317346.198,
+    "seen": 1787477112.9062626,
+    "ast_hash": "86e5670edac4967fa99b4736039ac72a",
+    "semantic_hash": "86e5670edac4967fa99b4736039ac72a"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/UserDetailServiceImpl.java": {
+    "mtime": 1784285834.281,
+    "seen": 1787477112.9062648,
+    "ast_hash": "3d28009cef9c486a962b63628cc51ac1",
+    "semantic_hash": "3d28009cef9c486a962b63628cc51ac1"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/config/AuthManagerConfig.java": {
+    "mtime": 1783942681.049254,
+    "seen": 1787477112.9062676,
+    "ast_hash": "4b47d1e36a787beb5f48d05f0110cb94",
+    "semantic_hash": "4b47d1e36a787beb5f48d05f0110cb94"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/config/CorsConfig.java": {
+    "mtime": 1785939636.796,
+    "seen": 1787477112.9062703,
+    "ast_hash": "755798c2d082afc4f33d6e3817bd8c95",
+    "semantic_hash": "755798c2d082afc4f33d6e3817bd8c95"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/config/PasswordEncoderConfig.java": {
+    "mtime": 1783942681.0632544,
+    "seen": 1787477112.9062734,
+    "ast_hash": "5301026ad6ecbcb8abe9a1d61ddadd81",
+    "semantic_hash": "5301026ad6ecbcb8abe9a1d61ddadd81"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/config/SecurityConfig.java": {
+    "mtime": 1785940206.161,
+    "seen": 1787477112.9062757,
+    "ast_hash": "bb5974a69ad27cb31e3db09ffa895b2c",
+    "semantic_hash": "bb5974a69ad27cb31e3db09ffa895b2c"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/handler/OauthFailureHandler.java": {
+    "mtime": 1784709529.251,
+    "seen": 1787477112.9062781,
+    "ast_hash": "fbd8b45238acfad87a4841433a59b4fc",
+    "semantic_hash": "fbd8b45238acfad87a4841433a59b4fc"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/security/handler/OauthSuccessHandler.java": {
+    "mtime": 1784708614.021,
+    "seen": 1787477112.9062808,
+    "ast_hash": "067aa2964dbb1e4fd3d95d9d0082c544",
+    "semantic_hash": "067aa2964dbb1e4fd3d95d9d0082c544"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/service/MessageService.java": {
+    "mtime": 1786952951.213,
+    "seen": 1787477112.906283,
+    "ast_hash": "8b9c428bf9e27b6768825eea4dcf53c0",
+    "semantic_hash": "8b9c428bf9e27b6768825eea4dcf53c0"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/service/MessageUtil.java": {
+    "mtime": 1786361162.586,
+    "seen": 1787477112.9062855,
+    "ast_hash": "eb8cdaaf7f71b1ea87fee6f189818ee0",
+    "semantic_hash": "eb8cdaaf7f71b1ea87fee6f189818ee0"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/service/RideService.java": {
+    "mtime": 1785763700.84,
+    "seen": 1787477112.906288,
+    "ast_hash": "e5dc8c4eb4861ef99b39b1401dc6ddf4",
+    "semantic_hash": "e5dc8c4eb4861ef99b39b1401dc6ddf4"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/service/RideUtil.java": {
+    "mtime": 1785763700.822,
+    "seen": 1787477112.9062905,
+    "ast_hash": "b9e2066d56fe14f65dc47fcaef779c81",
+    "semantic_hash": "b9e2066d56fe14f65dc47fcaef779c81"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/service/UserService.java": {
+    "mtime": 1784317346.14,
+    "seen": 1787477112.9062927,
+    "ast_hash": "917fd06772fdbc039ec77c506858e97b",
+    "semantic_hash": "917fd06772fdbc039ec77c506858e97b"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/websocket/StompBrokerConfig.java": {
+    "mtime": 1785941827.582,
+    "seen": 1787477112.9062953,
+    "ast_hash": "b01dc23e4875985634c601423a7b2702",
+    "semantic_hash": "b01dc23e4875985634c601423a7b2702"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/websocket/StompController.java": {
+    "mtime": 1785871473.049,
+    "seen": 1787477112.9062977,
+    "ast_hash": "665c0430fa27585401ea87da5e53f3f8",
+    "semantic_hash": "665c0430fa27585401ea87da5e53f3f8"
+  },
+  "src/main/java/com/mrshaikhmuhammad/ridelink/websocket/StompExceptionHandler.java": {
+    "mtime": 1785871176.71,
+    "seen": 1787477112.9063,
+    "ast_hash": "0d072ebf64b213afbf3da596b57b000f",
+    "semantic_hash": "0d072ebf64b213afbf3da596b57b000f"
+  },
+  "src/test/java/com/mrshaikhmuhammad/ridelink/RideCreateRequestDtoLinkApplicationTests.java": {
+    "mtime": 1784628148.999,
+    "seen": 1787477112.9063027,
+    "ast_hash": "bf7242b60794c3e2784e658adcf0803c",
+    "semantic_hash": "bf7242b60794c3e2784e658adcf0803c"
+  },
+  "AGENTS.md": {
+    "mtime": 1787477078.3992712,
+    "seen": 1787477933.2245343,
+    "ast_hash": "6a47d64fcc136324ca395065a707ef76",
+    "semantic_hash": "6a47d64fcc136324ca395065a707ef76"
+  },
+  "qodana.yaml": {
+    "mtime": 1782287474.4887133,
+    "seen": 1787477933.2245374,
+    "ast_hash": "54d16c588c2f6ddddbbc17410b6d2f28",
+    "semantic_hash": "54d16c588c2f6ddddbbc17410b6d2f28"
+  },
+  "src/main/resources/application.yaml": {
+    "mtime": 1785942141.629,
+    "seen": 1787477933.2245402,
+    "ast_hash": "38e166710ca084b8bccb0a7284679fac",
+    "semantic_hash": "38e166710ca084b8bccb0a7284679fac"
+  }
+}
